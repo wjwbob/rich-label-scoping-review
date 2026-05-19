@@ -16,7 +16,7 @@ Open [index.html](./index.html) in a browser.
 
 Your site URL will look like:
 
-`(https://wjwbob.github.io/rich-label-scoping-review/)`
+`[Rich Label](https://wjwbob.github.io/rich-label-scoping-review/)`
 
 ## Files
 
