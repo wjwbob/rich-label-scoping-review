@@ -758,7 +758,14 @@ const level2Categories = [
     mark: "R",
     accent: "violet",
     summary: "Includes any paper with schema-level, class-level, model-side, or auxiliary representation cues rather than validated per-instance target enrichment.",
-    bullets: ["formal markup or schema slots", "label semantics or class descriptions", "scene graph or AU structure", "commonsense or pseudo-rationale representation", "generated context as auxiliary layer"],
+    bullets: [
+      "formal markup or schema slots (schema defines what can be encoded)",
+      "class-level label descriptions (label name + category definition)",
+      "hierarchical class descriptions (relations among emotion categories)",
+      "CLIP text prompt / label embedding (model-side semantic representation)",
+      "scene graph or AU structure (intermediate evidence representation)",
+      "model-generated contextual representations (context layer, not necessarily rationale)"
+    ],
     papers: ["p01", "p04", "p22", "p24", "p26", "p27", "p29", "p30", "p36", "p37", "p40", "p41", "p44", "p33"]
   }
 ];
