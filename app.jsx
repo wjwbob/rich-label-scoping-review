@@ -717,7 +717,8 @@ const level2Categories = [
     shortTitle: "Granularity",
     mark: "G",
     accent: "amber",
-    summary: "Includes any paper with cues that make the affective target more fine-grained, multidimensional, uncertain, or temporally resolved.",
+    summary: "Richness comes from making the affective state representation more fine-grained, multidimensional, multiple, intense, probabilistic, or temporally specified.",
+    anchors: "Schroder et al. (2007); Williams et al. (2019)",
     bullets: ["intensity or dimensional affect", "compound or multi-label emotion", "soft or distributional labels", "engagement or empathy sub-dimensions", "temporal affect trajectory"],
     papers: ["p02", "p03", "p05", "p08", "p11", "p12", "p14", "p16", "p17", "p18", "p25", "p28", "p29", "p31", "p32", "p33", "p34", "p35", "p37", "p38", "p42", "p43"]
   },
@@ -727,7 +728,8 @@ const level2Categories = [
     shortTitle: "Causal attribution",
     mark: "C",
     accent: "emerald",
-    summary: "Includes any paper with cues for explicit causes, triggers, instigators, appraisal antecedents, or turning-point evidence.",
+    summary: "Richness comes from linking an emotion to its cause, trigger, causal span, cause utterance, or turning-point cause.",
+    anchors: "Poria et al. / RECCON; Wang et al. (2023); Ho et al. (2024)",
     bullets: ["emotion-cause pair", "cause utterance or span", "emotion change or flip", "turning points and pre/post change", "appraisal antecedents or stimulus"],
     papers: ["p03", "p09", "p10", "p14", "p15", "p18", "p20", "p21", "p23", "p39"]
   },
@@ -737,7 +739,8 @@ const level2Categories = [
     shortTitle: "Explanation",
     mark: "E",
     accent: "rose",
-    summary: "Includes any paper with natural-language descriptions, self-reports, or rationale-like explanations for the affective judgement.",
+    summary: "Richness comes from adding natural-language explanations, evidence-grounded reasoning, or multimodal cues that justify why an affective label was assigned.",
+    anchors: "Ke et al. (2021); Zhang et al. (2025); Cheng et al. (2024)",
     bullets: ["self-report descriptions", "caption or narrative explanation", "typed annotator rationale", "expert or clinical rationale", "evidence-grounded natural-language explanation"],
     papers: ["p02", "p03", "p06", "p07", "p08", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p19", "p20", "p21", "p23", "p25", "p28", "p32", "p34", "p35", "p39", "p41", "p42"]
   },
@@ -747,7 +750,8 @@ const level2Categories = [
     shortTitle: "Context",
     mark: "S",
     accent: "sky",
-    summary: "Includes any paper where social, temporal, interactional, bodily, task, or environmental situation is explicitly part of the cue structure.",
+    summary: "Richness comes from representing the person, social/communicative setting, interaction, environment, and broader situation in which affect is perceived.",
+    anchors: "Schroder et al. (2007); Yang et al. (2023); Etesam et al. (2024)",
     bullets: ["dialogue history", "task or scenario context", "coping or behaviour situation", "response planning and interactional sequence", "character, role, or action context"],
     papers: ["p02", "p03", "p06", "p07", "p08", "p09", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p23", "p25", "p28", "p29", "p31", "p32", "p33", "p34", "p35", "p38", "p39", "p42", "p43"]
   },
@@ -757,7 +761,8 @@ const level2Categories = [
     shortTitle: "Representation",
     mark: "R",
     accent: "violet",
-    summary: "Includes any paper with schema-level, class-level, model-side, or auxiliary representation cues rather than validated per-instance target enrichment.",
+    summary: "Richness comes from formalising affective information through structured schemas, descriptors, embeddings, AU structures, scene graphs, or other machine-readable representations.",
+    anchors: "Schroder et al. (2007); EmotionML/W3C; Yan et al. (2020); Wu et al. (2024)",
     bullets: [
       "formal markup or schema slots",
       "class-level label descriptions (label name + category definition)",
@@ -976,6 +981,7 @@ function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCateg
             <div>
               <div className="text-sm font-semibold text-slate-950">{selectedCategory.title}</div>
               <p className="mt-1 text-sm leading-6 text-slate-600">{selectedCategory.summary}</p>
+              <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Anchors: {selectedCategory.anchors}</p>
             </div>
           </div>
           <ul className="mt-3 grid gap-2 pl-5 text-sm text-slate-700 sm:grid-cols-2">
