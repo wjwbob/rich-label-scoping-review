@@ -16,7 +16,7 @@ Open [index.html](./index.html) in a browser.
 
 Your site URL will look like:
 
-`https://<your-username>.github.io/<your-repo-name>/`
+`(https://wjwbob.github.io/rich-label-scoping-review/)`
 
 ## Files
 
