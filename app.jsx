@@ -720,7 +720,7 @@ const level2Categories = [
     summary: "Richness comes from making the affective state representation more fine-grained, multidimensional, multiple, intense, probabilistic, or temporally specified.",
     anchors: "Schroder et al. (2007); Williams et al. (2019)",
     bullets: ["intensity or dimensional affect", "compound or multi-label emotion", "soft or distributional labels", "engagement or empathy sub-dimensions", "temporal affect trajectory"],
-    papers: ["p02", "p03", "p05", "p08", "p11", "p12", "p14", "p16", "p17", "p18", "p25", "p28", "p29", "p31", "p32", "p33", "p34", "p35", "p37", "p38", "p42", "p43"]
+    papers: ["p02", "p03", "p08", "p13", "p17", "p19", "p32", "p41", "p16", "p22", "p34", "p35", "p40", "p14", "p30", "p10", "p15", "p21", "p23", "p12", "p33", "p29", "p09", "p18", "p26", "p20", "p11", "p28", "p44", "p27", "p04", "p01", "p38", "p43", "p36", "p05", "p37"]
   },
   {
     id: "causal",
@@ -731,7 +731,7 @@ const level2Categories = [
     summary: "Richness comes from linking an emotion to its cause, trigger, causal span, cause utterance, or turning-point cause.",
     anchors: "Poria et al. / RECCON; Wang et al. (2023); Ho et al. (2024)",
     bullets: ["emotion-cause pair", "cause utterance or span", "emotion change or flip", "turning points and pre/post change", "appraisal antecedents or stimulus"],
-    papers: ["p03", "p09", "p10", "p14", "p15", "p18", "p20", "p21", "p23", "p39"]
+    papers: ["p02", "p03", "p22", "p35", "p14", "p10", "p15", "p21", "p23", "p09", "p18", "p20", "p01"]
   },
   {
     id: "descriptive",
@@ -742,7 +742,7 @@ const level2Categories = [
     summary: "Richness comes from adding natural-language explanations, evidence-grounded reasoning, or multimodal cues that justify why an affective label was assigned.",
     anchors: "Ke et al. (2021); Zhang et al. (2025); Cheng et al. (2024)",
     bullets: ["self-report descriptions", "caption or narrative explanation", "typed annotator rationale", "expert or clinical rationale", "evidence-grounded natural-language explanation"],
-    papers: ["p02", "p03", "p06", "p07", "p08", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p19", "p20", "p21", "p23", "p25", "p28", "p32", "p34", "p35", "p39", "p41", "p42"]
+    papers: ["p03", "p06", "p07", "p08", "p13", "p17", "p19", "p32", "p41", "p22", "p40", "p14", "p12", "p33", "p18", "p11", "p44"]
   },
   {
     id: "contextual",
@@ -753,7 +753,7 @@ const level2Categories = [
     summary: "Richness comes from representing the person, social/communicative setting, interaction, environment, and broader situation in which affect is perceived.",
     anchors: "Schroder et al. (2007); Yang et al. (2023); Etesam et al. (2024)",
     bullets: ["dialogue history", "task or scenario context", "coping or behaviour situation", "response planning and interactional sequence", "character, role, or action context"],
-    papers: ["p02", "p03", "p06", "p07", "p08", "p09", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p23", "p25", "p28", "p29", "p31", "p32", "p33", "p34", "p35", "p38", "p39", "p42", "p43"]
+    papers: ["p02", "p03", "p06", "p07", "p17", "p16", "p22", "p34", "p35", "p40", "p14", "p30", "p12", "p29", "p18", "p26", "p11", "p28", "p27", "p01", "p43"]
   },
   {
     id: "representation",
@@ -770,7 +770,7 @@ const level2Categories = [
       "scene graph or AU structure",
       "model-generated contextual representations (context layer, not necessarily rationale)"
     ],
-    papers: ["p01", "p04", "p22", "p24", "p26", "p27", "p29", "p30", "p36", "p37", "p40", "p41", "p44", "p33"]
+    papers: ["p07", "p41", "p20", "p44", "p27", "p04", "p36", "p37"]
   }
 ];
 
@@ -780,45 +780,236 @@ const sourceFilters = [
     title: "Human annotated",
     mark: "H",
     papers: [
-      "p01",
       "p02",
+      "p01",
       "p03",
+      "p38",
       "p04",
       "p05",
-      "p08",
+      "p21",
       "p09",
       "p10",
+      "p28",
+      "p30",
+      "p32",
       "p11",
       "p12",
-      "p14",
-      "p15",
-      "p16",
-      "p17",
-      "p18",
-      "p19",
-      "p20",
-      "p21",
-      "p23",
-      "p25",
-      "p28",
       "p29",
-      "p31",
-      "p32",
+      "p43",
+      "p23",
       "p34",
-      "p35",
-      "p38",
-      "p39",
-      "p42",
-      "p43"
+      "p15",
+      "p17",
+      "p18"
     ]
   },
   {
-    id: "derived",
-    title: "Algorithm extracted",
+    id: "generated",
+    title: "Algorithm generated",
     mark: "A",
-    papers: ["p06", "p07", "p13", "p22", "p24", "p26", "p27", "p30", "p33", "p36", "p37", "p40", "p41", "p44"]
+    papers: ["p33", "p16"]
+  },
+  {
+    id: "hybrid",
+    title: "Hybrid",
+    mark: "M",
+    papers: ["p36", "p37", "p20", "p06", "p22", "p07", "p08", "p40", "p26", "p27", "p41", "p35", "p13", "p14", "p44", "p19"]
   }
 ];
+
+const activePaperIds = Array.from(new Set(sourceFilters.flatMap((source) => source.papers)));
+
+const paperEnrichment = {
+  p01: [
+    "1. Core emotion description (categories, appraisal scale, dimensional scales, emotion related states)",
+    "2. Complex emotion(multiple emotions, change of emotions, intensity, temporal aspect)",
+    "3. meta information(confidence, probability, degree of acting)",
+    "4. external context (trigger, cause, target)",
+    "5. global metadata (personal info, culture, gender, personality, social and communicative context, envrionment)"
+  ],
+  p02: [
+    "1. Annotate the emotion labels from the view of speaker.",
+    "2. Give intensity/degree to emotion in rank of 3",
+    "3. Include analysis of cause and effect in a sentence",
+    "4. Include analysis of conditional sentence",
+    "5. Including Sub class(fine-grained) for an emotion",
+    "6. Allow multiple emotion tags for a sentence"
+  ],
+  p03: [
+    "1.pain, exertion, desire to stop (runner) with ascending numerical values between 1 and 5",
+    "2. pain, worries, confidence (chronic pain) with ascending numerical values between 1 and 10",
+    "3. emotional valence: negative, neutral, positive",
+    "4. think aloud description between prompt can refine ratings",
+    "5. In Discussion: think aloud description allows self-reflection, which reduce the randomness of groundtruth",
+    "6. In Discussion: provide additional linguistic cues (e.g., pain location, cause, emotional reaction to pain, etc) as multiple labels"
+  ],
+  p04: ["1. emotion labels", "2. AU annotations"],
+  p05: ["1. individual rater labels", "2. global consensus label"],
+  p06: [
+    "1.contextual information such as their social interactions, social relationships with others in the image input into an open text box",
+    "2. their environmental setting input into an open text box",
+    "3. divided the physical signals into multiple categories based on body parts by GPT, and annotators could use checkboxes to select relevant descriptions.",
+    "4. tag the person within a bounding box with various attributes, including their perceived age group, perceived sex, and social identity or occupation",
+    "5. the annotation interface generated an appropriate image caption based on all the chosen tags"
+  ],
+  p07: [
+    "1. Bounding box",
+    "2. Gender/age information",
+    "3. 848 action types from existing datasets",
+    "4. 850+ social signals from 'writer's guide'",
+    "5. scene locations from 335 rural and urban environment descriptors",
+    "6. Information above put into CLIP and generate descriptive caption",
+    "7. Caption generated by LLaVa"
+  ],
+  p08: ["1. ChatGPT to adjust original soft label distributions", "2. Human typed descriptions", "3. Rater distributions"],
+  p09: ["1. 7 emotions", "2. Instigator label to explain an emotion flip", "3. trigger label"],
+  p10: [
+    "1. emotion-cause pair e.g. (emotion utterance, cause utterance)",
+    "2. cause type",
+    "3. textual cause span",
+    "4. 6 emotion category"
+  ],
+  p11: [
+    "1. Each motion sequence includes the performer's self-reported intended emotion.",
+    "2. emotion perception distribution from 22 viewer",
+    "3. contextual scenario in which the motion occurred",
+    "4. The model generates short textual interpretations.",
+    "5. descriptions of human motions"
+  ],
+  p12: ["1. 11 emotion labels", "2. 32 compound emotion labels", "3. emotional descriptive text", "4. confidence", "5. gender"],
+  p13: [
+    "1. select emotional peak frame",
+    "2. MiniGPT-v2 describes visual context / activity / environment",
+    "3. Qwen-Audio generates audio tone descriptions from speech",
+    "4. Lexical subtitles provide spoken-text context"
+  ],
+  p14: [
+    "1. Indicates the point in time when the turning point change occurred",
+    "2. cause for marking the turning point",
+    "3. feelings, behaviors, decisions, perspectives before and after turning point",
+    "4. evidence annotation of turning point",
+    "5. relevant visual description of the scenes (frames) in the conversations",
+    "6. Common discrete emotion categories extracted from the circumplex model"
+  ],
+  p15: [
+    "1. 6 emotion category",
+    "2. textual cause span",
+    "3. multimodal cause utterance",
+    "4. emotion casual pair (emotion utterance + emotion category + textual cause span)"
+  ],
+  p16: [
+    "1. 7 primary emotions, 40 secondary emotions, and 81 tertiary emotions",
+    "2. This incorporates the character backstory and plot context from the musical theatre script. It includes: character, text/lyrics, global persona, scene context, and visual description."
+  ],
+  p17: [
+    "1. SAM for valence, arousal, dominance",
+    "2. PANAS for positive and negative affect",
+    "3. liking and familiarity ratings",
+    "4. participants describe: what major emotion they felt, whether they felt mixed emotions, why they felt those emotions in interview",
+    "5. Transcripts of interview recording are manually cleaned to extract each participant’s response to each stimulus"
+  ],
+  p18: [
+    "1. autobiographical review text",
+    "2. 7 emotion label",
+    "3. emotion intensity ratings",
+    "4. 20 cognitive appraisal dimensions",
+    "5. appraisal-eliciting text responses/answer from prompt",
+    "6. consumer-behaviour",
+    "7. individual traits"
+  ],
+  p19: [
+    "1. Emotion label",
+    "2. Interpretive Reasoning",
+    "3. Evidence-Grounded Reasoning",
+    "5. Semantic + paralinguistic framing: what is said and how it is said"
+  ],
+  p20: [
+    "1. emotion label",
+    "2. emotion-cause relation label",
+    "3. conversation as a heterogeneous conversation graph",
+    "4. graph includes: conversation node, utterance node, target classification node, cause classification node"
+  ],
+  p21: [
+    "1. Ekman's six basic emotions and neutral",
+    "2. individual cause span",
+    "3. aggregated cause: takes the form of multiple cause spans that together form a complete cause."
+  ],
+  p22: [
+    "1. Generate natural language descriptions using VLLM.",
+    "2. descriptions include target person's emotions and their surrounding environment",
+    "3. visual/contextual cues, such as: facial expression, body pose, interaction, environment",
+    "4. causes supporting these emotions",
+    "5. BoLD, EMOTIC, and CAER-S all have emotion annotations provided manually or from the original dataset."
+  ],
+  p23: ["1. emotion category", "2. emotion utterance", "3. cause utterance", "4. cause type", "5. cause's modality cue"],
+  p26: [
+    "1. 28 emotion labels",
+    "2. multi-perspective commonsense knowledge: speaker intent, speaker reaction,effect on speaker, effect on others, reaction of others"
+  ],
+  p27: [
+    "1. emotion labels",
+    "2. People in the image + background environment information",
+    "3. Object labels and object-object relations in the image",
+    "4. face/body pose feature in the character area",
+    "5. Representing images as structured semantic relationships: nodes are objects, edges are relationships/predicates"
+  ],
+  p28: ["1. danmu: contextual viewer-response from video", "2. 5 affective labels: VA, Primary emotion, Valence comparison, Arousal comparison"],
+  p29: [
+    "1. 14 emotions",
+    "2. personality information",
+    "3. speaker and non-speaker view",
+    "4. intra-personal emotion context",
+    "5. inter-personal emotion propagation"
+  ],
+  p30: ["1. 32 body language", "2. 24 emotion", "3. 24 psychiatric symptoms", "4. split body to upper and lower part"],
+  p32: [
+    "1. marked sentences that evidenced or contradicted any of the nine DSM-5 depression symptoms",
+    "2. annotator added a concise clinical rationale",
+    "3. The tags are not just for the entire Reddit post, but are sentence-level annotations."
+  ],
+  p33: [
+    "1. 28 multi-label emotion labels",
+    "2. expressiveness scores(soft label)",
+    "3. Contextual descriptions generated around a specific actor/character"
+  ],
+  p34: ["1. Traditional emotion labels", "2. Coping strategy: How do people act or respond when faced with an emotionally eliciting event?"],
+  p35: [
+    "1. A emotion label",
+    "2. PAD emotion states, Pleasure, Arousal, Dominance",
+    "3. 18 types of parental behaviors: positive, neutral, negative",
+    "4. the causal chain and dynamic relationships in the interaction process: what triggers the conflict, how parents respond, how children react, and how the conflict unfolds"
+  ],
+  p36: [
+    "1. Arousal, Valence, Dominance,Liking",
+    "2. The canonical output variates learned by CCA, i.e., redundant representations of the label."
+  ],
+  p37: [
+    "1. multi-label emotion labels",
+    "2. emotion category is represented as a one-hot vector",
+    "3. Map each emotion category to a Valence-Arousal (VA) space.",
+    "4. VA similarity represent emotion-emotion correlation"
+  ],
+  p38: ["1. emotion labels", "2. intensity", "3. sentiment label"],
+  p40: [
+    "1. Use EMOTIC's 26 emotion categories and require the model to output a list of emotion labels.",
+    "2. Generate a narrative caption with semantic structure",
+    "3. narrative caption including cue-level richness: age/gender, action, environment, physical/social signals, includes age/gender categories, 848 action classes, 224 environment descriptors, and 889 physical/social signals."
+  ],
+  p41: [
+    "1. discrete label",
+    "2. natural-language explanation / rationale",
+    "3. semantic parser exchanges NL explanations into a series of logical forms that represent labelling functions",
+    "4. The remaining labelling functions are adopted for unlabelled instances to generate a matrix of labels"
+  ],
+  p43: ["1. self-report labels", "2. third-party annotation labels", "3. empathy, distress, personality"],
+  p44: [
+    "1. 32 emotion labels",
+    "2. emotion label description",
+    "3. utterance instance",
+    "4. encode utterance and emotion label into a unified embedding space",
+    "5. triple view: instance-label view, instance-instance view, label-label view"
+  ]
+};
 
 const categoryStyles = {
   amber: {
@@ -848,9 +1039,9 @@ const categoryStyles = {
   }
 };
 
-const uniquePaperCount = Object.keys(papers).length;
+const uniquePaperCount = activePaperIds.length;
 const totalCategoryCount = level2Categories.length;
-const allPaperIds = Object.keys(papers);
+const allPaperIds = activePaperIds;
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -860,7 +1051,8 @@ function getPaper(id) {
   return {
     id,
     ...papers[id],
-    ...(paperBibliography[id] || {})
+    ...(paperBibliography[id] || {}),
+    exactlyEnriched: paperEnrichment[id] || []
   };
 }
 
@@ -950,7 +1142,7 @@ function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCateg
           Clear selection
         </button>
       </div>
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-3">
         {sourceFilters.map((source) => (
           <SourceButton
             key={source.id}
@@ -1069,12 +1261,28 @@ function PaperModal({ paper, onClose }) {
 
         <div className="mt-5 grid gap-4">
           <BibliographyBlock paper={paper} />
+          {paper.exactlyEnriched.length ? <EnrichmentBlock items={paper.exactlyEnriched} /> : null}
           <InfoBlock label="What it does" text={paper.summary} />
           <InfoBlock label="Richness mechanism" text={paper.richness} />
           <InfoBlock label="Use in thesis" text={paper.use} />
           <InfoBlock label="Gap / limitation" text={paper.caution} />
         </div>
       </div>
+    </div>
+  );
+}
+
+function EnrichmentBlock({ items }) {
+  return (
+    <div className="rounded-2xl bg-slate-50 p-4">
+      <div className="text-sm font-semibold text-slate-950">What is exactly enriched</div>
+      <ul className="mt-2 space-y-2 pl-5 text-sm leading-6 text-slate-600">
+        {items.map((item) => (
+          <li key={item} className="list-disc">
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
