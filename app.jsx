@@ -712,65 +712,120 @@ const paperBibliography = {
 
 const level2Categories = [
   {
-    id: "granularity",
-    title: "Richness in Affective-state Granularity",
-    shortTitle: "Granularity",
+    id: "affective-state",
+    title: "Core Affective-state Labels and Granularity",
+    shortTitle: "Affective state",
     mark: "G",
     accent: "amber",
-    summary: "Richness comes from making the affective state representation more fine-grained, multidimensional, multiple, intense, probabilistic, or temporally specified.",
-    anchors: "Schroder et al. (2007); Williams et al. (2019)",
-    bullets: ["intensity or dimensional affect", "compound or multi-label emotion", "soft or distributional labels", "engagement or empathy sub-dimensions", "temporal affect trajectory"],
-    papers: ["p02", "p03", "p08", "p13", "p17", "p19", "p32", "p41", "p16", "p22", "p34", "p35", "p40", "p14", "p30", "p10", "p15", "p21", "p23", "p12", "p33", "p29", "p09", "p18", "p26", "p20", "p11", "p28", "p44", "p27", "p04", "p01", "p38", "p43", "p36", "p05", "p37"]
+    summary: "The target affective state itself, broadly defined: emotion, expression, pain, depression symptoms, sentiment, dimensional affect, intensity, probability, multi-label form, or affective change over time.",
+    anchors: "categorical emotion/expression; multi-label or compound affect; dimensional ratings; intensity; soft distributions; affect dynamics; sentiment; pain/self-state; clinical symptoms",
+    bullets: [
+      "discrete emotion, expression, pain, or clinical symptom labels",
+      "multi-label, blended, compound, or co-occurring affect",
+      "valence, arousal, dominance, PAD, or other dimensional ratings",
+      "intensity, degree, probability, soft labels, or distributional labels",
+      "emotion shift, flip, turning point, or temporal affect change"
+    ],
+    papers: ["p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p22", "p23", "p26", "p27", "p29", "p32", "p33", "p34", "p35", "p36", "p37", "p38", "p40", "p41", "p43", "p44"]
   },
   {
-    id: "causal",
-    title: "Causal-attribution Richness",
-    shortTitle: "Causal attribution",
-    mark: "C",
-    accent: "emerald",
-    summary: "Richness comes from linking an emotion to its cause, trigger, causal span, cause utterance, or turning-point cause.",
-    anchors: "Poria et al. / RECCON; Wang et al. (2023); Ho et al. (2024)",
-    bullets: ["emotion-cause pair", "cause utterance or span", "emotion change or flip", "turning points and pre/post change", "appraisal antecedents or stimulus"],
-    papers: ["p02", "p03", "p22", "p35", "p14", "p10", "p15", "p21", "p23", "p09", "p18", "p20", "p01"]
-  },
-  {
-    id: "descriptive",
-    title: "Explanation-oriented Richness",
-    shortTitle: "Explanation",
-    mark: "E",
-    accent: "rose",
-    summary: "Richness comes from adding natural-language explanations, evidence-grounded reasoning, or multimodal cues that justify why an affective label was assigned.",
-    anchors: "Ke et al. (2021); Zhang et al. (2025); Cheng et al. (2024)",
-    bullets: ["self-report descriptions", "caption or narrative explanation", "typed annotator rationale", "expert or clinical rationale", "evidence-grounded natural-language explanation"],
-    papers: ["p03", "p06", "p07", "p08", "p13", "p17", "p19", "p32", "p41", "p22", "p40", "p14", "p12", "p33", "p18", "p11", "p44"]
-  },
-  {
-    id: "contextual",
-    title: "Situational-context Richness",
+    id: "context-setting",
+    title: "Context, Interaction, Identity, and Discourse Setting",
     shortTitle: "Context",
-    mark: "S",
+    mark: "C",
     accent: "sky",
-    summary: "Richness comes from representing the person, social/communicative setting, interaction, environment, and broader situation in which affect is perceived.",
-    anchors: "Schroder et al. (2007); Yang et al. (2023); Etesam et al. (2024)",
-    bullets: ["dialogue history", "task or scenario context", "coping or behaviour situation", "response planning and interactional sequence", "character, role, or action context"],
-    papers: ["p02", "p03", "p06", "p07", "p17", "p16", "p22", "p34", "p35", "p40", "p14", "p30", "p12", "p29", "p18", "p26", "p11", "p28", "p27", "p01", "p43"]
+    summary: "Situational information around affect: scene, social relation, speaker or person identity, dialogue/source content, local temporal context, or generated narrative context.",
+    anchors: "identity/demographics/role/speaker; scene/environment; dialogue/source content; generated narrative; social interaction; temporal context",
+    bullets: [
+      "person, speaker, role, demographic, or character identity",
+      "scene, environment, situation, or world context",
+      "dialogue, utterance, subtitle, essay, lyrics, or text source",
+      "social interaction, relationship, conflict, or interpersonal setting",
+      "generated scenario, plot, caption, or local temporal context"
+    ],
+    papers: ["p02", "p06", "p07", "p09", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p22", "p23", "p27", "p29", "p32", "p33", "p34", "p35", "p38", "p40", "p43", "p44"]
   },
   {
-    id: "representation",
-    title: "Model-/schema-level Representation Richness",
+    id: "reasoning-causal",
+    title: "Reasoning, Causal, Appraisal, and Commonsense Enrichment",
+    shortTitle: "Reasoning",
+    mark: "E",
+    accent: "emerald",
+    summary: "Information that explains, justifies, causes, appraises, or commonsense-reasons about an affective label.",
+    anchors: "emotion-cause/trigger; natural-language rationale; appraisal/coping/regulation; commonsense inference",
+    bullets: [
+      "emotion-cause pair, cause utterance, cause span, or trigger",
+      "natural-language explanation, rationale, or reasoning trace",
+      "evidence-grounded reasoning from text, audio, vision, or context",
+      "appraisal, coping, regulation, or antecedent assessment",
+      "commonsense intent, effect, reaction, or world-knowledge cues"
+    ],
+    papers: ["p01", "p02", "p03", "p08", "p09", "p10", "p11", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p23", "p26", "p29", "p33", "p34", "p41"]
+  },
+  {
+    id: "multimodal-evidence",
+    title: "Multimodal, Behavioral, Facial, and Biosignal Evidence",
+    shortTitle: "Evidence",
+    mark: "S",
+    accent: "rose",
+    summary: "Observable or sensor-derived evidence used to enrich affect labels, including modalities, visual/body cues, facial AUs/landmarks, speech/audio, and physiology.",
+    anchors: "visual/body/action cues; modality/channel labels; facial AU/landmarks; physiology; audio/speech cues",
+    bullets: [
+      "visible action, body movement, posture, gesture, or non-verbal behaviour",
+      "facial action units, landmarks, face regions, or facial geometry",
+      "audio tone, speech, prosody, or sound-based descriptions",
+      "EEG, peripheral physiology, or other biosignal evidence",
+      "text/audio/visual/multimodal channel or cue-source labels"
+    ],
+    papers: ["p01", "p04", "p05", "p06", "p07", "p11", "p12", "p13", "p14", "p22", "p23", "p34", "p36", "p37", "p38", "p40"]
+  },
+  {
+    id: "person-trait",
+    title: "Person-level Trait and Empathy Labels",
+    shortTitle: "Trait",
+    mark: "T",
+    accent: "teal",
+    summary: "Stable or person-level affect-relevant characteristics, such as personality, trait empathy, persona, or perceived empathy, rather than the immediate affective state itself.",
+    anchors: "personality; trait empathy; persona; perceived empathy",
+    bullets: [
+      "personality traits or stable individual differences",
+      "trait empathy, distress, or perceived empathy",
+      "global persona or character-level affective disposition",
+      "person-level descriptors that contextualize but are not the immediate emotion"
+    ],
+    papers: ["p16", "p17", "p29", "p34", "p43", "p44"]
+  },
+  {
+    id: "structured-representation",
+    title: "Structured Representation and Schema-level Enrichment",
     shortTitle: "Representation",
     mark: "R",
     accent: "violet",
-    summary: "Richness comes from formalising affective information through structured schemas, descriptors, embeddings, AU structures, scene graphs, or other machine-readable representations.",
-    anchors: "Schroder et al. (2007); EmotionML/W3C; Yan et al. (2020); Wu et al. (2024)",
+    summary: "Machine-readable, schema-level, spatial, graph, class-description, or structural representations that enrich the label space or instance representation.",
+    anchors: "spatial/graph/structural representation; class/schema semantic representation",
     bullets: [
-      "formal markup or schema slots",
-      "class-level label descriptions (label name + category definition)",
-      "CLIP text prompt / label embedding",
-      "scene graph or AU structure",
-      "model-generated contextual representations (context layer, not necessarily rationale)"
+      "formal schema slots, markup, or machine-readable representation",
+      "class-level label descriptions, definitions, embeddings, or label-label relations",
+      "scene graph, graph relation, matrix, cluster, or structured semantic representation",
+      "bounding boxes, target proposals, spatial structures, or object-relation cues"
     ],
-    papers: ["p07", "p41", "p20", "p44", "p27", "p04", "p36", "p37"]
+    papers: ["p05", "p20", "p22", "p27", "p36", "p37", "p40", "p44"]
+  },
+  {
+    id: "annotation-process",
+    title: "Annotation Process, Guideline, and Quality Metadata",
+    shortTitle: "Annotation",
+    mark: "A",
+    accent: "indigo",
+    summary: "Information about how labels are produced, constrained, judged, or quality-controlled.",
+    anchors: "annotation quality/uncertainty/metadata; annotation guideline/decision rule",
+    bullets: [
+      "annotator confidence, rater identity, disagreement, or interrater agreement",
+      "annotation rules, viewpoint constraints, or decision guidelines",
+      "confusability, scoring constraints, sparse annotation, or user-setting metadata",
+      "quality-control information around how ground truth was produced"
+    ],
+    papers: ["p01", "p02", "p05", "p11", "p36", "p44"]
   }
 ];
 
@@ -1036,6 +1091,16 @@ const categoryStyles = {
     icon: "bg-violet-100",
     count: "bg-violet-100 text-violet-700",
     active: "border-violet-400 bg-violet-50"
+  },
+  teal: {
+    icon: "bg-teal-100",
+    count: "bg-teal-100 text-teal-700",
+    active: "border-teal-400 bg-teal-50"
+  },
+  indigo: {
+    icon: "bg-indigo-100",
+    count: "bg-indigo-100 text-indigo-700",
+    active: "border-indigo-400 bg-indigo-50"
   }
 };
 
@@ -1153,7 +1218,7 @@ function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCateg
           />
         ))}
       </div>
-      <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
         {level2Categories.map((category) => (
           <CategoryButton
             key={category.id}
@@ -1173,7 +1238,7 @@ function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCateg
             <div>
               <div className="text-sm font-semibold text-slate-950">{selectedCategory.title}</div>
               <p className="mt-1 text-sm leading-6 text-slate-600">{selectedCategory.summary}</p>
-              <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Anchors: {selectedCategory.anchors}</p>
+              <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Merged low-level groups: {selectedCategory.anchors}</p>
             </div>
           </div>
           <ul className="mt-3 grid gap-2 pl-5 text-sm text-slate-700 sm:grid-cols-2">
@@ -1346,7 +1411,7 @@ function MiniIllustration() {
               Review map
             </div>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-              Level 2 now uses five inclusive classes from the latest taxonomy. If a paper has any cue under a class, it appears there.
+              The taxonomy now uses seven inclusive high-level classes. If a paper has any low-level cue under a class, it appears there.
             </p>
           </div>
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
