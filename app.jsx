@@ -841,13 +841,10 @@ const sourceFilters = [
       "p01",
       "p03",
       "p38",
-      "p04",
       "p05",
       "p21",
       "p09",
       "p10",
-      "p28",
-      "p30",
       "p32",
       "p11",
       "p12",
@@ -870,7 +867,7 @@ const sourceFilters = [
     id: "hybrid",
     title: "Hybrid",
     mark: "M",
-    papers: ["p36", "p37", "p20", "p06", "p22", "p07", "p08", "p40", "p26", "p27", "p41", "p35", "p13", "p14", "p44", "p19"]
+    papers: ["p37", "p20", "p06", "p22", "p07", "p08", "p40", "p26", "p27", "p41", "p35", "p13", "p14", "p19"]
   }
 ];
 
@@ -1189,7 +1186,18 @@ function CategoryButton({ category, selectedCategory, selectedSource, onSelect }
   );
 }
 
-function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCategorySelect, onClear }) {
+function MatrixButton({ onClick, children }) {
+  return (
+    <button
+      onClick={onClick}
+      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
+    >
+      {children}
+    </button>
+  );
+}
+
+function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCategorySelect, onClear, onOpenMatrix }) {
   const hasSelection = Boolean(selectedSource || selectedCategory);
 
   return (
@@ -1209,6 +1217,10 @@ function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCateg
           Clear selection
         </button>
       </div>
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Label source</div>
+        <MatrixButton onClick={() => onOpenMatrix("source")}>Open source table</MatrixButton>
+      </div>
       <div className="grid gap-3 sm:grid-cols-3">
         {sourceFilters.map((source) => (
           <SourceButton
@@ -1219,6 +1231,10 @@ function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCateg
             onSelect={onSourceSelect}
           />
         ))}
+      </div>
+      <div className="mb-3 mt-5 flex items-center justify-between gap-3">
+        <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Taxonomy</div>
+        <MatrixButton onClick={() => onOpenMatrix("taxonomy")}>Open taxonomy table</MatrixButton>
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {level2Categories.map((category) => (
@@ -1239,17 +1255,8 @@ function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCateg
             </span>
             <div>
               <div className="text-sm font-semibold text-slate-950">{selectedCategory.title}</div>
-              <p className="mt-1 text-sm leading-6 text-slate-600">{selectedCategory.summary}</p>
-              <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Merged low-level groups: {selectedCategory.anchors}</p>
             </div>
           </div>
-          <ul className="mt-3 grid gap-2 pl-5 text-sm text-slate-700 sm:grid-cols-2">
-            {selectedCategory.bullets.map((bullet) => (
-              <li key={bullet} className="list-disc">
-                {bullet}
-              </li>
-            ))}
-          </ul>
           {selectedCategory.subcategories ? (
             <div className="mt-4 rounded-2xl bg-white/70 p-4">
               <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Included in Other</div>
@@ -1268,9 +1275,6 @@ function FilterPanel({ selectedSource, selectedCategory, onSourceSelect, onCateg
                           {matchingPapers.length} papers
                         </span>
                       </div>
-                      <p className="mt-2 text-xs leading-5 text-slate-600">{subcategory.summary}</p>
-                      <p className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500">Low-level groups</p>
-                      <p className="mt-1 text-xs leading-5 text-slate-600">{subcategory.lowLevels}</p>
                     </div>
                   );
                 })}
@@ -1319,6 +1323,94 @@ function PapersPanel({ papersToShow, selectedSource, selectedCategory, onPaperCl
               {paper.authors ? <div className="mt-2 line-clamp-2 text-xs leading-5 text-slate-500">{paper.authors}</div> : null}
             </button>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MatrixModal({ type, onClose }) {
+  if (!type) return null;
+
+  const isSourceMatrix = type === "source";
+  const columns = isSourceMatrix ? sourceFilters : level2Categories;
+  const title = isSourceMatrix ? "Label source table" : "Taxonomy table";
+  const subtitle = isSourceMatrix
+    ? "Each source option is a column. A check mark means the paper belongs to that source group."
+    : "Each taxonomy option is a column. A check mark means the paper has at least one low-level label under that category.";
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 px-4 py-6 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="flex max-h-[calc(100vh-3rem)] w-full max-w-6xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-5">
+          <div>
+            <h3 className="text-2xl font-semibold leading-tight text-slate-950">{title}</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-600">{subtitle}</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="rounded-full bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-200"
+          >
+            Close
+          </button>
+        </div>
+
+        <div className="overflow-auto p-4">
+          <table className="min-w-full border-separate border-spacing-0 text-left text-sm">
+            <thead>
+              <tr>
+                <th className="sticky left-0 top-0 z-20 w-80 min-w-80 rounded-tl-2xl border-b border-slate-200 bg-slate-50 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Article authors
+                </th>
+                {columns.map((column, index) => (
+                  <th
+                    key={column.id}
+                    className={cx(
+                      "sticky top-0 z-10 min-w-36 border-b border-slate-200 bg-slate-50 px-4 py-3 text-center text-xs font-semibold uppercase tracking-wide text-slate-500",
+                      index === columns.length - 1 && "rounded-tr-2xl"
+                    )}
+                  >
+                    <div>{column.shortTitle || column.title}</div>
+                    <div className="mt-1 text-[11px] font-medium normal-case tracking-normal text-slate-400">{column.papers.length} papers</div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {allPaperIds.map((id) => {
+                const paper = getPaper(id);
+                return (
+                  <tr key={id} className="group">
+                    <td className="sticky left-0 z-10 border-b border-slate-100 bg-white px-4 py-3 align-top group-hover:bg-slate-50">
+                      <div className="text-sm font-semibold leading-5 text-slate-950">{paper.authors || "Unknown authors"}</div>
+                      <div className="mt-1 text-xs leading-5 text-slate-500">{paper.title}</div>
+                    </td>
+                    {columns.map((column) => {
+                      const isChecked = column.papers.includes(id);
+                      const styles = column.accent ? categoryStyles[column.accent] : null;
+                      return (
+                        <td key={column.id} className="border-b border-slate-100 px-4 py-3 text-center align-middle group-hover:bg-slate-50">
+                          {isChecked ? (
+                            <span className={cx("inline-flex h-7 w-7 items-center justify-center rounded-full text-sm font-bold", styles ? styles.count : "bg-slate-900 text-white")}>
+                              {"\u2713"}
+                            </span>
+                          ) : (
+                            <span className="text-slate-200">-</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -1440,7 +1532,7 @@ function MiniIllustration() {
               Review map
             </div>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-              The taxonomy now uses four main high-level classes plus Other for low-frequency classes. If a paper has any low-level cue under a class, it appears there.
+              The taxonomy uses four main high-level classes plus Other for low-frequency classes.
             </p>
           </div>
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
@@ -1452,16 +1544,9 @@ function MiniIllustration() {
                     <span>{category.mark}</span>
                     <span>{category.title}</span>
                   </div>
-                  <ul className="mt-3 space-y-1.5 pl-5 text-sm text-slate-700">
-                    {category.bullets.map((bullet) => (
-                      <li key={bullet} className="list-disc">
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
                   {category.subcategories ? (
                     <div className="mt-3 rounded-xl bg-white/70 px-3 py-2 text-xs font-semibold text-slate-600">
-                      Includes {category.subcategories.length} low-frequency subtypes
+                      {category.subcategories.length} low-frequency subtypes
                     </div>
                   ) : null}
                 </div>
@@ -1478,6 +1563,7 @@ function RichAffectiveGroundTruthMindMap() {
   const [selectedSource, setSelectedSource] = useState(sourceFilters[0]);
   const [selectedCategory, setSelectedCategory] = useState(level2Categories[0]);
   const [selectedPaper, setSelectedPaper] = useState(null);
+  const [matrixType, setMatrixType] = useState(null);
   const papersToShow = getMatchingPaperIds(selectedSource, selectedCategory).map(getPaper);
 
   return (
@@ -1509,6 +1595,7 @@ function RichAffectiveGroundTruthMindMap() {
               setSelectedSource(null);
               setSelectedCategory(null);
             }}
+            onOpenMatrix={setMatrixType}
           />
           <PapersPanel
             papersToShow={papersToShow}
@@ -1519,6 +1606,7 @@ function RichAffectiveGroundTruthMindMap() {
         </section>
       </div>
 
+      <MatrixModal type={matrixType} onClose={() => setMatrixType(null)} />
       <PaperModal paper={selectedPaper} onClose={() => setSelectedPaper(null)} />
     </div>
   );
