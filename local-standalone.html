@@ -49,6 +49,55 @@
       h3 {
         font-family: "Fraunces", serif;
       }
+
+      .taxonomy-stage {
+        width: max(100%, 760px);
+        height: clamp(36rem, 62vw, 44rem);
+      }
+
+      .taxonomy-scroll {
+        scrollbar-color: #94a3b8 #e2e8f0;
+        scrollbar-width: thin;
+      }
+
+      .taxonomy-component-chip {
+        animation: component-chip-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+
+      .component-orbit-node {
+        animation: component-orbit-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+
+      @keyframes component-chip-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes component-orbit-in {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.72);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .taxonomy-stage *,
+        .taxonomy-component-chip,
+        .component-orbit-node {
+          animation: none !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   </head>
   <body class="min-h-screen text-slate-950 antialiased">
@@ -1065,6 +1114,12 @@ const paperBibliography = {
     bibtexKey: "gongTripleViewFrameworkFineGrained2025a"
   }
 };
+const taxonomyComponent = (id, label, keywords, paperIds = []) => ({
+  id,
+  label,
+  keywords,
+  paperIds
+});
 const level2Categories = [{
   id: "affective-state",
   title: "Core Affective-state Representation and Granularity",
@@ -1074,7 +1129,8 @@ const level2Categories = [{
   summary: "How the target affective state itself is represented, including emotion/expression categories, empathy/interpersonal affect, clinical or symptom states, dimensions, intensity, multi-label form, soft labels, polarity, and temporal change.",
   anchors: "categorical emotion/expression; dimensional affect; multi-label or compound affect; affect dynamics; soft/probabilistic labels; intensity; sentiment; clinical symptoms; empathy",
   bullets: ["discrete emotion, expression, empathy, pain, or clinical symptom labels", "valence, arousal, dominance, PAD, pain level, wellbeing, or other rating scales", "multi-label, blended, compound, or co-occurring affect", "intensity, degree, probability, soft labels, or distributional labels", "sentiment, polarity, emotion shift, turning point, or temporal affect change"],
-  papers: ["p01", "p02", "p03", "p05", "p06", "p07", "p08", "p09", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p22", "p23", "p26", "p27", "p29", "p32", "p33", "p34", "p35", "p37", "p38", "p40", "p41", "p43"]
+  components: [taxonomyComponent("fine-grained", "Fine-grained classes", ["categorical emotion", "emotion subclasses", "emotion labels", "sentiment", "depression symptoms"]), taxonomyComponent("intensity-dimensions", "Intensity & dimensions", ["intensity", "valence", "valance", "arousal", "dominance", "pad", "rating", "severity", "pleasure score"]), taxonomyComponent("multi-soft", "Multi / soft labels", ["multi-label", "compound", "soft", "distribution", "probability", "multiple emotions"]), taxonomyComponent("temporal-change", "Temporal change", ["emotion flip", "turning point", "pre-point", "post-point", "shift values"]), taxonomyComponent("related-states", "Related affective states", ["pain", "depression", "distress", "empathy", "worry", "well-being", "likeness"])],
+  papers: ["p06", "p17", "p02", "p03", "p07", "p08", "p13", "p19", "p32", "p41", "p16", "p22", "p34", "p35", "p40", "p14", "p10", "p15", "p21", "p23", "p12", "p33", "p29", "p09", "p18", "p26", "p20", "p11", "p27", "p01", "p38", "p43", "p37"]
 }, {
   id: "context-setting",
   title: "Context, Identity, Social Interaction, and Discourse Setting",
@@ -1084,7 +1140,8 @@ const level2Categories = [{
   summary: "Situational and discourse information around affect, including scene/environment, identity, speaker/role, dialogue/source content, generated narrative context, social interaction, and local temporal context.",
   anchors: "identity/demographic/role/speaker labels; context/scene/environment descriptors; dialogue/source content; generated narrative; social interaction; temporal/local context",
   bullets: ["person, speaker, role, demographic, or character identity", "scene, environment, situation, or world context", "dialogue, utterance, subtitle, essay, lyrics, or text source", "social interaction, relationship, conflict, or interpersonal setting", "generated scenario, plot, caption, or local temporal context"],
-  papers: ["p01", "p02", "p06", "p07", "p09", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p20", "p22", "p23", "p27", "p29", "p32", "p33", "p34", "p35", "p38", "p40", "p43"]
+  components: [taxonomyComponent("scene-environment", "Scene & environment", ["scene", "environment", "setting", "location", "image/background"]), taxonomyComponent("identity-roles", "Identity & roles", ["identity", "speaker", "role", "character", "demographic"]), taxonomyComponent("dialogue-history", "Dialogue & source content", ["dialogue", "sentence structure", "subtitle", "lyrics", "narrative", "descriptive texts"]), taxonomyComponent("social-relations", "Social relations", ["social", "relationship", "interaction", "conflict", "parent-child"]), taxonomyComponent("temporal-setting", "Temporal & situational setting", ["time", "timestamp", "familiarity", "product context", "scenario information", "emotion moment"])],
+  papers: ["p06", "p17", "p02", "p07", "p13", "p32", "p16", "p22", "p35", "p40", "p14", "p15", "p23", "p12", "p33", "p29", "p09", "p18", "p20", "p11", "p27", "p01", "p38", "p43"]
 }, {
   id: "reasoning-causal",
   title: "Explanation, Causal, and Appraisal Enrichment",
@@ -1094,7 +1151,8 @@ const level2Categories = [{
   summary: "Information that explains, justifies, causes, or appraises an affective label, including rationales, emotion-cause links, appraisal, coping, and regulation.",
   anchors: "emotion-cause and trigger annotations; affective explanation/rationale labels; appraisal/coping/regulation labels",
   bullets: ["emotion-cause pair, cause utterance, cause span, or trigger", "natural-language explanation, rationale, or reasoning trace", "evidence-grounded reasoning from text, audio, vision, or context", "clinical, expert, LLM-generated, or self-report rationale", "appraisal, coping, regulation, or antecedent assessment"],
-  papers: ["p01", "p02", "p03", "p08", "p09", "p10", "p11", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p23", "p29", "p32", "p33", "p34", "p41"]
+  components: [taxonomyComponent("rationales", "Rationales & descriptions", ["rationale", "explanation", "reasoning", "description", "reason of rating", "annotation reason", "free-text"]), taxonomyComponent("emotion-causes", "Emotion causes", ["emotion-cause", "cause-effect", "cause evidence", "individual cause", "aggregated causes", "causal utterance", "cause type"]), taxonomyComponent("appraisal", "Appraisal dimensions", ["appraisal"]), taxonomyComponent("triggers", "Triggers & emotion objects", ["trigger", "turning point", "object of emotion"]), taxonomyComponent("coping", "Coping responses", ["coping", "regulation"])],
+  papers: ["p17", "p02", "p03", "p08", "p13", "p19", "p32", "p41", "p16", "p34", "p14", "p10", "p15", "p21", "p23", "p33", "p29", "p09", "p18", "p20", "p11", "p01", "p43"]
 }, {
   id: "multimodal-evidence",
   title: "Multimodal, Behavioral, and Signal Evidence",
@@ -1104,104 +1162,473 @@ const level2Categories = [{
   summary: "Observable or sensor-derived evidence used to support affect labels, including visual/body/action cues, facial AUs/landmarks, modality cues, audio/speech, and biosignals.",
   anchors: "visual/body/action descriptors; modality/channel labels; facial AU/landmarks; audio/speech descriptors",
   bullets: ["visible action, body movement, posture, gesture, or non-verbal behaviour", "facial action units, landmarks, face regions, or facial geometry", "audio tone, speech, prosody, or sound-based descriptions", "text/audio/visual/multimodal channel or cue-source labels", "sensor-derived or behavioural evidence used to support affect labels"],
-  papers: ["p01", "p05", "p06", "p07", "p11", "p12", "p13", "p14", "p22", "p23", "p26", "p27", "p34", "p38", "p40"]
+  components: [taxonomyComponent("face-body", "Face & body cues", ["facial", "face", "body", "posture", "gesture", "action unit", "motion", "landmark", "non-verbal", "observable behaviour"]), taxonomyComponent("voice-acoustics", "Voice & acoustics", ["audio tone", "acoustic", "audio"]), taxonomyComponent("text-speech", "Text & speech evidence", ["text cue", "text, audio", "utterance", "visual and context cues"]), taxonomyComponent("physiology", "Physiological signals", ["physical signal", "physiological", "biosignal", "sensor"]), taxonomyComponent("modality-links", "Modality links", ["modality", "multimodal", "audio and visual", "acoustic, visual and text"])],
+  papers: ["p06", "p07", "p13", "p22", "p34", "p40", "p14", "p23", "p12", "p29", "p11", "p27", "p01", "p38", "p37"]
 }, {
-  id: "other-low-frequency",
-  title: "Other Low-frequency Richness Types",
-  shortTitle: "Other",
-  mark: "O",
+  id: "structured-representation",
+  title: "Structured and Schema-level Representation",
+  shortTitle: "Structure",
+  mark: "R",
   accent: "violet",
-  summary: "Groups high-level richness types with fewer than 10 extracted labels in the final taxonomy.",
-  anchors: "structured/schema representation; annotation process and metadata; personality/person-level traits; event-centered intent/effect/reaction",
-  bullets: ["structured and schema-level representation", "annotation process, guideline, and quality metadata", "personality and person-level trait labels", "event-centered intent, effect, and reaction labels"],
-  papers: ["p01", "p02", "p05", "p10", "p11", "p12", "p16", "p17", "p18", "p20", "p22", "p26", "p27", "p29", "p34", "p37", "p38", "p40", "p43"],
-  subcategories: [{
-    title: "Structured and schema-level representation",
-    count: 8,
-    articleCount: 6,
-    summary: "Machine-readable, graph, spatial, schema-level, class-level, or label-relation representations that enrich the label space or instance representation.",
-    lowLevels: "Spatial, graph, and structural representation labels; class/schema semantic representation labels",
-    papers: ["p20", "p22", "p27", "p37", "p38", "p40"]
-  }, {
-    title: "Annotation process, guideline, and quality metadata",
-    count: 7,
-    articleCount: 5,
-    summary: "Information about how labels are produced, constrained, judged, prompted, or quality-controlled.",
-    lowLevels: "Annotation quality, uncertainty, and metadata; annotation guideline and decision-rule labels",
-    papers: ["p01", "p02", "p05", "p11", "p12"]
-  }, {
-    title: "Personality and person-level trait labels",
-    count: 7,
-    articleCount: 6,
-    summary: "Stable person-level characteristics such as personality, persona, character traits, or enduring individual differences.",
-    lowLevels: "Personality, trait",
-    papers: ["p16", "p17", "p18", "p29", "p34", "p43"]
-  }, {
-    title: "Event-centered intent, effect, and reaction labels",
-    count: 5,
-    articleCount: 2,
-    summary: "Labels that describe inferred intent, likely effect, or reaction of the speaker or others around an affective event, including COMET/ATOMIC-style relation cues.",
-    lowLevels: "Intent, effect, and reaction labels; COMET commonsense cues",
-    papers: ["p10", "p26"]
-  }]
+  summary: "Machine-readable structures that encode relations among affect, evidence, causes, people, and context.",
+  anchors: "graph representations; bounding boxes and localisation; correlation and contrastive schemas",
+  bullets: ["graph nodes, edges, and syntactic graphs", "person bounding boxes and localisation", "VA-aware correlation and contrastive pairs"],
+  components: [taxonomyComponent("graphs-relations", "Graph representations", ["graph representation", "graph nodes", "syntactic graph"]), taxonomyComponent("localisation", "Bounding boxes & localisation", ["bounding box", "target-person bounding box"]), taxonomyComponent("correlation-schemas", "Correlation & contrastive schemas", ["correlation", "contrastive pairs"])],
+  papers: ["p22", "p40", "p20", "p27", "p38", "p37"]
+}, {
+  id: "person-level-traits",
+  title: "Personality and Person-level Trait Labels",
+  shortTitle: "Person traits",
+  mark: "P",
+  accent: "teal",
+  summary: "Stable or enduring person-level characteristics that help situate affective judgements.",
+  anchors: "personality; psychological wellbeing; character traits; consumer and behavioural traits",
+  bullets: ["personality dimensions", "psychological wellbeing", "character descriptions and story roles", "consumer and behavioural traits"],
+  components: [taxonomyComponent("personality", "Personality", ["personality"]), taxonomyComponent("well-being", "Well-being", ["well-being"]), taxonomyComponent("character-traits", "Character traits", ["character", "story role"]), taxonomyComponent("consumer-traits", "Consumer & behavioural traits", ["consumer purchasing", "personality trait"])],
+  papers: ["p17", "p16", "p34", "p29", "p18", "p43"]
+}, {
+  id: "event-centred",
+  title: "Event-centred Intent, Effect, and Reaction Labels",
+  shortTitle: "Event labels",
+  mark: "I",
+  accent: "indigo",
+  summary: "Labels describing inferred intent, likely effects, and reactions around an affective event.",
+  anchors: "speaker or purchasing intent; effects on speaker or others; reactions; COMET commonsense cues",
+  bullets: ["speaker or purchasing intent", "effect on the speaker or other people", "speaker and other-person reactions", "COMET commonsense event cues"],
+  components: [taxonomyComponent("speaker-intent", "Speaker intent", ["speaker intent", "purchasing intension"]), taxonomyComponent("effects", "Effects on self & others", ["effect on speaker", "effect on others"]), taxonomyComponent("reactions", "Reactions", ["reaction of others", "speaker reaction", "reaction text"]), taxonomyComponent("commonsense", "COMET commonsense cues", ["comet commonsense"])],
+  papers: ["p10", "p18", "p26"]
+}, {
+  id: "annotation-perspective",
+  title: "Annotation Perspective",
+  shortTitle: "Perspective",
+  mark: "V",
+  accent: "fuchsia",
+  summary: "The viewpoint represented in an affective judgement, including speaker or experiencer views and explicit perspective shifts.",
+  anchors: "speaker view; experiencer view; perspective shifts",
+  bullets: ["annotation from the speaker’s view", "experiencer-view metadata", "shifts in how a speaker sees or understands a topic"],
+  components: [taxonomyComponent("speaker-experiencer", "Speaker / experiencer view", ["speaker’s view", "experiencer view"]), taxonomyComponent("perspective-shifts", "Perspective shifts", ["perspectives: shifts"])],
+  papers: ["p02", "p14", "p01"]
 }];
 const sourceFilters = [{
   id: "annotated",
   title: "Human annotated",
+  description: "Human annotated / self-reported",
   mark: "H",
-  papers: ["p02", "p01", "p03", "p38", "p05", "p21", "p09", "p10", "p32", "p11", "p12", "p29", "p43", "p23", "p34", "p15", "p17", "p18"]
+  papers: ["p17", "p02", "p03", "p34", "p21", "p23", "p12", "p18", "p43"]
 }, {
   id: "generated",
   title: "Algorithm generated",
+  description: "Algorithm-generated",
   mark: "A",
-  papers: ["p33", "p16"]
+  papers: ["p19", "p22", "p40", "p33"]
 }, {
   id: "hybrid",
   title: "Hybrid",
+  description: "Human-algorithm",
   mark: "M",
-  papers: ["p37", "p20", "p06", "p22", "p07", "p08", "p40", "p26", "p27", "p41", "p35", "p13", "p14", "p19"]
+  papers: ["p06", "p07", "p08", "p13", "p32", "p41", "p16", "p35", "p14", "p10", "p15", "p29", "p09", "p26", "p20", "p11", "p27", "p38", "p37"]
 }];
-const activePaperIds = Array.from(new Set(sourceFilters.flatMap(source => source.papers)));
+const activePaperIds = Array.from(new Set(level2Categories.flatMap(category => category.papers)));
 const paperEnrichment = {
-  p01: ["1. Core emotion description (categories, appraisal scale, dimensional scales, emotion related states)", "2. Complex emotion(multiple emotions, change of emotions, intensity, temporal aspect)", "3. meta information(confidence, probability, degree of acting)", "4. external context (trigger, cause, target)", "5. global metadata (personal info, culture, gender, personality, social and communicative context, envrionment)"],
-  p02: ["1. Annotate the emotion labels from the view of speaker.", "2. Give intensity/degree to emotion in rank of 3", "3. Include analysis of cause and effect in a sentence", "4. Include analysis of conditional sentence", "5. Including Sub class(fine-grained) for an emotion", "6. Allow multiple emotion tags for a sentence"],
-  p03: ["1.pain, exertion, desire to stop (runner) with ascending numerical values between 1 and 5", "2. pain, worries, confidence (chronic pain) with ascending numerical values between 1 and 10", "3. emotional valence: negative, neutral, positive", "4. think aloud description between prompt can refine ratings", "5. In Discussion: think aloud description allows self-reflection, which reduce the randomness of groundtruth", "6. In Discussion: provide additional linguistic cues (e.g., pain location, cause, emotional reaction to pain, etc) as multiple labels"],
-  p04: ["1. emotion labels", "2. AU annotations"],
-  p05: ["1. individual rater labels", "2. global consensus label"],
-  p06: ["1.contextual information such as their social interactions, social relationships with others in the image input into an open text box", "2. their environmental setting input into an open text box", "3. divided the physical signals into multiple categories based on body parts by GPT, and annotators could use checkboxes to select relevant descriptions.", "4. tag the person within a bounding box with various attributes, including their perceived age group, perceived sex, and social identity or occupation", "5. the annotation interface generated an appropriate image caption based on all the chosen tags"],
-  p07: ["1. Bounding box", "2. Gender/age information", "3. 848 action types from existing datasets", "4. 850+ social signals from 'writer's guide'", "5. scene locations from 335 rural and urban environment descriptors", "6. Information above put into CLIP and generate descriptive caption", "7. Caption generated by LLaVa"],
-  p08: ["1. ChatGPT to adjust original soft label distributions", "2. Human typed descriptions", "3. Rater distributions"],
-  p09: ["1. 7 emotions", "2. Instigator label to explain an emotion flip", "3. trigger label"],
-  p10: ["1. emotion-cause pair e.g. (emotion utterance, cause utterance)", "2. cause type", "3. textual cause span", "4. 6 emotion category"],
-  p11: ["1. Each motion sequence includes the performer's self-reported intended emotion.", "2. emotion perception distribution from 22 viewer", "3. contextual scenario in which the motion occurred", "4. The model generates short textual interpretations.", "5. descriptions of human motions"],
-  p12: ["1. 11 emotion labels", "2. 32 compound emotion labels", "3. emotional descriptive text", "4. confidence", "5. gender"],
-  p13: ["1. select emotional peak frame", "2. MiniGPT-v2 describes visual context / activity / environment", "3. Qwen-Audio generates audio tone descriptions from speech", "4. Lexical subtitles provide spoken-text context"],
-  p14: ["1. Indicates the point in time when the turning point change occurred", "2. cause for marking the turning point", "3. feelings, behaviors, decisions, perspectives before and after turning point", "4. evidence annotation of turning point", "5. relevant visual description of the scenes (frames) in the conversations", "6. Common discrete emotion categories extracted from the circumplex model"],
-  p15: ["1. 6 emotion category", "2. textual cause span", "3. multimodal cause utterance", "4. emotion casual pair (emotion utterance + emotion category + textual cause span)"],
-  p16: ["1. 7 primary emotions, 40 secondary emotions, and 81 tertiary emotions", "2. This incorporates the character backstory and plot context from the musical theatre script. It includes: character, text/lyrics, global persona, scene context, and visual description."],
-  p17: ["1. SAM for valence, arousal, dominance", "2. PANAS for positive and negative affect", "3. liking and familiarity ratings", "4. participants describe: what major emotion they felt, whether they felt mixed emotions, why they felt those emotions in interview", "5. Transcripts of interview recording are manually cleaned to extract each participant’s response to each stimulus"],
-  p18: ["1. autobiographical review text", "2. 7 emotion label", "3. emotion intensity ratings", "4. 20 cognitive appraisal dimensions", "5. appraisal-eliciting text responses/answer from prompt", "6. consumer-behaviour", "7. individual traits"],
-  p19: ["1. Emotion label", "2. Interpretive Reasoning", "3. Evidence-Grounded Reasoning", "5. Semantic + paralinguistic framing: what is said and how it is said"],
-  p20: ["1. emotion label", "2. emotion-cause relation label", "3. conversation as a heterogeneous conversation graph", "4. graph includes: conversation node, utterance node, target classification node, cause classification node"],
-  p21: ["1. Ekman's six basic emotions and neutral", "2. individual cause span", "3. aggregated cause: takes the form of multiple cause spans that together form a complete cause."],
-  p22: ["1. Generate natural language descriptions using VLLM.", "2. descriptions include target person's emotions and their surrounding environment", "3. visual/contextual cues, such as: facial expression, body pose, interaction, environment", "4. causes supporting these emotions", "5. BoLD, EMOTIC, and CAER-S all have emotion annotations provided manually or from the original dataset."],
-  p23: ["1. emotion category", "2. emotion utterance", "3. cause utterance", "4. cause type", "5. cause's modality cue"],
-  p26: ["1. 28 emotion labels", "2. multi-perspective commonsense knowledge: speaker intent, speaker reaction,effect on speaker, effect on others, reaction of others"],
-  p27: ["1. emotion labels", "2. People in the image + background environment information", "3. Object labels and object-object relations in the image", "4. face/body pose feature in the character area", "5. Representing images as structured semantic relationships: nodes are objects, edges are relationships/predicates"],
-  p28: ["1. danmu: contextual viewer-response from video", "2. 5 affective labels: VA, Primary emotion, Valence comparison, Arousal comparison"],
-  p29: ["1. 14 emotions", "2. personality information", "3. speaker and non-speaker view", "4. intra-personal emotion context", "5. inter-personal emotion propagation"],
-  p30: ["1. 32 body language", "2. 24 emotion", "3. 24 psychiatric symptoms", "4. split body to upper and lower part"],
-  p32: ["1. marked sentences that evidenced or contradicted any of the nine DSM-5 depression symptoms", "2. annotator added a concise clinical rationale", "3. The tags are not just for the entire Reddit post, but are sentence-level annotations."],
-  p33: ["1. 28 multi-label emotion labels", "2. expressiveness scores(soft label)", "3. Contextual descriptions generated around a specific actor/character"],
-  p34: ["1. Traditional emotion labels", "2. Coping strategy: How do people act or respond when faced with an emotionally eliciting event?"],
-  p35: ["1. A emotion label", "2. PAD emotion states, Pleasure, Arousal, Dominance", "3. 18 types of parental behaviors: positive, neutral, negative", "4. the causal chain and dynamic relationships in the interaction process: what triggers the conflict, how parents respond, how children react, and how the conflict unfolds"],
-  p36: ["1. Arousal, Valence, Dominance,Liking", "2. The canonical output variates learned by CCA, i.e., redundant representations of the label."],
-  p37: ["1. multi-label emotion labels", "2. emotion category is represented as a one-hot vector", "3. Map each emotion category to a Valence-Arousal (VA) space.", "4. VA similarity represent emotion-emotion correlation"],
-  p38: ["1. emotion labels", "2. intensity", "3. sentiment label"],
-  p40: ["1. Use EMOTIC's 26 emotion categories and require the model to output a list of emotion labels.", "2. Generate a narrative caption with semantic structure", "3. narrative caption including cue-level richness: age/gender, action, environment, physical/social signals, includes age/gender categories, 848 action classes, 224 environment descriptors, and 889 physical/social signals."],
-  p41: ["1. discrete label", "2. natural-language explanation / rationale", "3. semantic parser exchanges NL explanations into a series of logical forms that represent labelling functions", "4. The remaining labelling functions are adopted for unlabelled instances to generate a matrix of labels"],
-  p43: ["1. self-report labels", "2. third-party annotation labels", "3. empathy, distress, personality"],
-  p44: ["1. 32 emotion labels", "2. emotion label description", "3. utterance instance", "4. encode utterance and emotion label into a unified embedding space", "5. triple view: instance-label view, instance-instance view, label-label view"]
+  "p06": ["Categorical emotion: 13 categories", "Environmental setting descriptors", "Perceived demographic and role information", "Relationship and social interaction descriptors", "Body, hand, and posture signals", "Face and eye/mouth/facial landmarks"],
+  "p17": ["Intensity of each affect category", "Categorical emotion: 20 categories", "Dimensions: Valence, Arousal, Dominance", "Likeness: how much participant like the video content", "The familiarity of participants with video content", "Affective rationale/explanation: text description", "Personality of participants", "Psychological well-being"],
+  "p02": ["Emotion intensity", "Categorical emotion: 6 categories", "Emotion subclasses: emotions derived from 6 basic emotions", "Multi-label emotion annotation", "Sentence structure is considered in annotation", "Emotion cause-effect relation", "Annotated considering speaker’s view"],
+  "p03": ["Dimensional ratings: emotional valence; confidence", "Desire to stop (exercise)", "exertion", "pain level", "worry", "Think-aloud explanation of the reason of rating", "Think-aloud description of the current status"],
+  "p07": ["Categorical emotion: 26 categories", "Multi-label emotion labels", "Environmental / location descriptors", "Age / gender / role descriptors", "Human interaction descriptors", "Action descriptors", "Physical signal descriptors"],
+  "p08": ["Categorical emotion: 8 categories", "Emotion distribution", "Relabelling (emotion distribution) reasons", "Typed free text keywords to describe emotions"],
+  "p13": ["Categorical emotion: 9 categories", "Lexical subtitle", "Rationale of why the emotion label applies", "Visual objective description", "Audio tone description", "Facial action unit and peak-frame (emotion) information", "Visual expression description"],
+  "p19": ["Categorical emotion: 10 IEMOCAP emotion categories; 7 MELD-ER emotion categories", "Natural language sentence with emotion, e.g. the speaker is feeling angry", "3 MELD-SR sentiment categories", "Evidence-grounded reasoning: justify emotional state from utterances", "Interpretive reasoning: explanation via intent or state", "Reasoning-quality scores"],
+  "p32": ["Categorical emotion: 10 emotions", "9 DSM-5 depression symptoms", "Original BDI-II depression severity", "Publisher information", "Time", "Location", "Clinical rationale from psychologist", "LLM generated clinical rationale"],
+  "p41": ["Sentiment: 3 sentiments", "Soft/probabilistic affect labels", "Natural language explanations: reasons for sentiment labels"],
+  "p16": ["Categorical emotion: 128 emotion tags from primary emotion groups", "Context of the current scene", "Spoken text/lyrics/dialogue", "Character identity (speaker/singer)", "LLM reasoning about the situation", "character’s overall personality and story role"],
+  "p22": ["Categorical emotion: BoLD / EMOTIC 26 emotion categories", "VLLM-generated contextual descriptions", "visual context (facial/body cues)", "Graph representation: person bounding box"],
+  "p34": ["Emotion intensity", "Categorical emotion: 16 Roseman’s emotions", "Self emotion ratings", "4 coping strategies: attack, contact, distance, reject", "Non-verbal behaviour description", "Character description"],
+  "p35": ["PAD values shift values", "Self-reported PAD emotions", "LLM-inferred pleasure score", "Scene details (conflict-scene)", "Speaker-role information", "18 parental behaviour codes", "7 parent-child conflict types"],
+  "p40": ["Multi-label affect: 13 categories from annotation ;6 categories for LLM predicted", "Environment descriptors", "Speaker information: gender/age", "Action evidence: physical signal", "Graph representation: person bounding box"],
+  "p14": ["Emotion labels at pre-point and post-point", "Emotion labels at the moment of turning point", "Turning point type: 5 categories", "LLaVA-generated visual descriptions", "Turning point timestamp", "Cause of turning point", "Visual evidence: facial expressions, actions, postures and gestures", "Perspectives: Shifts in the way a speaker sees or understands a topic"],
+  "p10": ["Categorical emotion: 6 emotion categories", "Emotion cause type (objective vs. subjective)", "Cause evidence in the utterance", "Emotion-cause utterance pairs (linking emotion to its cause)", "Specific words in the utterance that lead to causes", "COMET commonsense cues: generated react phrases used in experiments"],
+  "p15": ["Categorical emotion: 6 emotion categories", "Speaker’s identity", "MECPE multimodal emotion-cause pairs: linking emotion utterance to a cause utterance using language, audio and vision", "Specific words in the utterance that lead to causes", "Cause evidence in the utterance"],
+  "p21": ["Categorical emotion: 7 emotions categories", "Individual cause: Text describing part or all of the emotion cause", "Aggregated causes: complete causes formed by combining multiple individual causes", "Emotion-cause pairs: pairs between emotion utterance and each individual cause span.", "Implicit cause: used when no explicit evidence shown in the conversation"],
+  "p23": ["Categorical emotion: 6 emotion categories", "Speaker identity", "Emotion cause type labels; utter-cause-emotion triplets", "Modality-cause cue labels: whether the cause inference is based on text, audio or video"],
+  "p12": ["Categorical emotion: 11 emotion categories", "Compound emotion labels: 32 multiple expression labels", "Generated bilingual (Chinese and English) emotional descriptive texts", "Participant gender", "Facial landmark: face regions and frame-level 68 facial landmarks"],
+  "p33": ["Categorical emotion: 28 emotion categories", "Soft emotion labels: multiple emotions can be attached to one utterance with scores from 0 to 1, e.g. anger 1.0, caring 1.0, confusion 0.5 and desire 0.8 for the same utterance", "Generated narrative story/context", "Actor/character identity", "Emotion reasoning: short explanation of why each emotion label fits the utterance"],
+  "p29": ["Categorical emotion: 14 emotion categories", "Short-term context: nearby sentences before/after the emotion moment", "Speaker status: speaker/non-speaker", "Emotion moment: the time point target person’s emotion is judged", "Annotator’s annotation reason", "Emotion annotation reason justified using text, audio, visual and context cues", "Personality knowledge"],
+  "p09": ["Emotion flip labels: emotion changes between two consecutive utterances, e.g. fear → joy", "Categorical emotion: MELD 8 emotion categories", "Speaker’s identity", "Appraisal labels: 27 categories: include nervousness, adoration, annoyance…"],
+  "p18": ["Emotion intensity ratings: 7-point Likert scale", "Categorical emotion: 9 emotion labels", "Participant demographic information", "Product context: product recalled, cost", "20 cognitive appraisal ratings (1-7)", "Personality trait", "Consumer purchasing habits", "Purchasing intension"],
+  "p26": ["Categorical emotion: 28 emotion categories", "Multi-label emotion classes: marked present/absent", "Effect on others", "Effect on speaker", "Reaction of others", "Speaker intent", "Speaker reaction"],
+  "p20": ["Categorical emotion: 7 emotion labels", "Speaker identity", "Binary causal utterance labels: if a historical utterance can be the cause of an emotional utterance", "Graph nodes representing the target utterance and candidate cause utterance", "Graph edge representing global context"],
+  "p11": ["Categorical emotion: 7 emotion categories", "Emotion probability distribution: human annotated/generated", "Scenario information", "Performer identity", "LLM free-text explanations on how it interprets cues", "LLM free-text body motion description", "Body motion intensity"],
+  "p27": ["Categorical emotion: 26 BoLD; 7 CAER-S; EMOTIC 26 emotion categories", "Multi-label emotion labels: EMOTIC 26 emotion categories", "Image/background information", "Face and body posture", "Target-person bounding box"],
+  "p01": ["Emotion turning point", "Intensity", "Categorical emotion:", "Dimensional emotion values", "Compound emotions", "Emotion-related state: pain, depression", "Social context", "Person information", "Acting / authenticity", "Appraisal scales", "Emotion trigger / cause", "Object of emotion", "Modality information", "Observable behaviour", "Experiencer view"],
+  "p38": ["Intensity values", "Multi-label emotion categories", "Sentiment labels", "Dialogue history context", "Multi-modality evidence: audio and visual", "Syntactic graph of the utterance"],
+  "p43": ["Emotion intensity", "Distress", "Emotion polarity", "Multi-label emotion labels: 8 categories", "Empathy", "Demographic information of participants", "Reaction text after reading", "Personality of essay writer"],
+  "p37": ["Valance and Arousal scores", "Multi-label emotion label: 7 categories", "VA scores from acoustic, visual and text cues", "VA-aware emotion correlation", "Contrastive pairs: constructed by VA distance"]
+};
+const paperEnrichmentByCategory = {
+  "p06": {
+    "affective-state": ["Categorical emotion: 13 categories"],
+    "context-setting": ["Environmental setting descriptors", "Perceived demographic and role information", "Relationship and social interaction descriptors"],
+    "reasoning-causal": [],
+    "multimodal-evidence": ["Body, hand, and posture signals", "Face and eye/mouth/facial landmarks"],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p17": {
+    "affective-state": ["Intensity of each affect category", "Categorical emotion: 20 categories", "Dimensions: Valence, Arousal, Dominance", "Likeness: how much participant like the video content"],
+    "context-setting": ["The familiarity of participants with video content"],
+    "reasoning-causal": ["Affective rationale/explanation: text description"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": ["Personality of participants", "Psychological well-being"],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p02": {
+    "affective-state": ["Emotion intensity", "Categorical emotion: 6 categories", "Emotion subclasses: emotions derived from 6 basic emotions", "Multi-label emotion annotation"],
+    "context-setting": ["Sentence structure is considered in annotation"],
+    "reasoning-causal": ["Emotion cause-effect relation"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": ["Annotated considering speaker’s view"]
+  },
+  "p03": {
+    "affective-state": ["Dimensional ratings: emotional valence; confidence", "Desire to stop (exercise)", "exertion", "pain level", "worry"],
+    "context-setting": [],
+    "reasoning-causal": ["Think-aloud explanation of the reason of rating", "Think-aloud description of the current status"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p07": {
+    "affective-state": ["Categorical emotion: 26 categories", "Multi-label emotion labels"],
+    "context-setting": ["Environmental / location descriptors", "Age / gender / role descriptors", "Human interaction descriptors"],
+    "reasoning-causal": [],
+    "multimodal-evidence": ["Action descriptors", "Physical signal descriptors"],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p08": {
+    "affective-state": ["Categorical emotion: 8 categories", "Emotion distribution"],
+    "context-setting": [],
+    "reasoning-causal": ["Relabelling (emotion distribution) reasons", "Typed free text keywords to describe emotions"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p13": {
+    "affective-state": ["Categorical emotion: 9 categories"],
+    "context-setting": ["Lexical subtitle"],
+    "reasoning-causal": ["Rationale of why the emotion label applies", "Visual objective description"],
+    "multimodal-evidence": ["Audio tone description", "Facial action unit and peak-frame (emotion) information", "Visual expression description"],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p19": {
+    "affective-state": ["Categorical emotion: 10 IEMOCAP emotion categories; 7 MELD-ER emotion categories", "Natural language sentence with emotion, e.g. the speaker is feeling angry", "3 MELD-SR sentiment categories"],
+    "context-setting": [],
+    "reasoning-causal": ["Evidence-grounded reasoning: justify emotional state from utterances", "Interpretive reasoning: explanation via intent or state", "Reasoning-quality scores"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p32": {
+    "affective-state": ["Categorical emotion: 10 emotions", "9 DSM-5 depression symptoms", "Original BDI-II depression severity"],
+    "context-setting": ["Publisher information", "Time", "Location"],
+    "reasoning-causal": ["Clinical rationale from psychologist", "LLM generated clinical rationale"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p41": {
+    "affective-state": ["Sentiment: 3 sentiments", "Soft/probabilistic affect labels"],
+    "context-setting": [],
+    "reasoning-causal": ["Natural language explanations: reasons for sentiment labels"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p16": {
+    "affective-state": ["Categorical emotion: 128 emotion tags from primary emotion groups"],
+    "context-setting": ["Context of the current scene", "Spoken text/lyrics/dialogue", "Character identity (speaker/singer)"],
+    "reasoning-causal": ["LLM reasoning about the situation"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": ["character’s overall personality and story role"],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p22": {
+    "affective-state": ["Categorical emotion: BoLD / EMOTIC 26 emotion categories"],
+    "context-setting": ["VLLM-generated contextual descriptions"],
+    "reasoning-causal": [],
+    "multimodal-evidence": ["visual context (facial/body cues)"],
+    "structured-representation": ["Graph representation: person bounding box"],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p34": {
+    "affective-state": ["Emotion intensity", "Categorical emotion: 16 Roseman’s emotions", "Self emotion ratings"],
+    "context-setting": [],
+    "reasoning-causal": ["4 coping strategies: attack, contact, distance, reject"],
+    "multimodal-evidence": ["Non-verbal behaviour description"],
+    "structured-representation": [],
+    "person-level-traits": ["Character description"],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p35": {
+    "affective-state": ["PAD values shift values", "Self-reported PAD emotions", "LLM-inferred pleasure score"],
+    "context-setting": ["Scene details (conflict-scene)", "Speaker-role information", "18 parental behaviour codes", "7 parent-child conflict types"],
+    "reasoning-causal": [],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p40": {
+    "affective-state": ["Multi-label affect: 13 categories from annotation ;6 categories for LLM predicted"],
+    "context-setting": ["Environment descriptors", "Speaker information: gender/age"],
+    "reasoning-causal": [],
+    "multimodal-evidence": ["Action evidence: physical signal"],
+    "structured-representation": ["Graph representation: person bounding box"],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p14": {
+    "affective-state": ["Emotion labels at pre-point and post-point", "Emotion labels at the moment of turning point", "Turning point type: 5 categories"],
+    "context-setting": ["LLaVA-generated visual descriptions", "Turning point timestamp"],
+    "reasoning-causal": ["Cause of turning point"],
+    "multimodal-evidence": ["Visual evidence: facial expressions, actions, postures and gestures"],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": ["Perspectives: Shifts in the way a speaker sees or understands a topic"]
+  },
+  "p10": {
+    "affective-state": ["Categorical emotion: 6 emotion categories"],
+    "context-setting": [],
+    "reasoning-causal": ["Emotion cause type (objective vs. subjective)", "Cause evidence in the utterance", "Emotion-cause utterance pairs (linking emotion to its cause)", "Specific words in the utterance that lead to causes"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": ["COMET commonsense cues: generated react phrases used in experiments"],
+    "annotation-perspective": []
+  },
+  "p15": {
+    "affective-state": ["Categorical emotion: 6 emotion categories"],
+    "context-setting": ["Speaker’s identity"],
+    "reasoning-causal": ["MECPE multimodal emotion-cause pairs: linking emotion utterance to a cause utterance using language, audio and vision", "Specific words in the utterance that lead to causes", "Cause evidence in the utterance"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p21": {
+    "affective-state": ["Categorical emotion: 7 emotions categories"],
+    "context-setting": [],
+    "reasoning-causal": ["Individual cause: Text describing part or all of the emotion cause", "Aggregated causes: complete causes formed by combining multiple individual causes", "Emotion-cause pairs: pairs between emotion utterance and each individual cause span.", "Implicit cause: used when no explicit evidence shown in the conversation"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p23": {
+    "affective-state": ["Categorical emotion: 6 emotion categories"],
+    "context-setting": ["Speaker identity"],
+    "reasoning-causal": ["Emotion cause type labels; utter-cause-emotion triplets"],
+    "multimodal-evidence": ["Modality-cause cue labels: whether the cause inference is based on text, audio or video"],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p12": {
+    "affective-state": ["Categorical emotion: 11 emotion categories", "Compound emotion labels: 32 multiple expression labels"],
+    "context-setting": ["Generated bilingual (Chinese and English) emotional descriptive texts", "Participant gender"],
+    "reasoning-causal": [],
+    "multimodal-evidence": ["Facial landmark: face regions and frame-level 68 facial landmarks"],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p33": {
+    "affective-state": ["Categorical emotion: 28 emotion categories", "Soft emotion labels: multiple emotions can be attached to one utterance with scores from 0 to 1, e.g. anger 1.0, caring 1.0, confusion 0.5 and desire 0.8 for the same utterance"],
+    "context-setting": ["Generated narrative story/context", "Actor/character identity"],
+    "reasoning-causal": ["Emotion reasoning: short explanation of why each emotion label fits the utterance"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p29": {
+    "affective-state": ["Categorical emotion: 14 emotion categories"],
+    "context-setting": ["Short-term context: nearby sentences before/after the emotion moment", "Speaker status: speaker/non-speaker", "Emotion moment: the time point target person’s emotion is judged"],
+    "reasoning-causal": ["Annotator’s annotation reason"],
+    "multimodal-evidence": ["Emotion annotation reason justified using text, audio, visual and context cues"],
+    "structured-representation": [],
+    "person-level-traits": ["Personality knowledge"],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p09": {
+    "affective-state": ["Emotion flip labels: emotion changes between two consecutive utterances, e.g. fear → joy", "Categorical emotion: MELD 8 emotion categories"],
+    "context-setting": ["Speaker’s identity"],
+    "reasoning-causal": ["Appraisal labels: 27 categories: include nervousness, adoration, annoyance…"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p18": {
+    "affective-state": ["Emotion intensity ratings: 7-point Likert scale", "Categorical emotion: 9 emotion labels"],
+    "context-setting": ["Participant demographic information", "Product context: product recalled, cost"],
+    "reasoning-causal": ["20 cognitive appraisal ratings (1-7)"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": ["Personality trait", "Consumer purchasing habits"],
+    "event-centred": ["Purchasing intension"],
+    "annotation-perspective": []
+  },
+  "p26": {
+    "affective-state": ["Categorical emotion: 28 emotion categories", "Multi-label emotion classes: marked present/absent"],
+    "context-setting": [],
+    "reasoning-causal": [],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": ["Effect on others", "Effect on speaker", "Reaction of others", "Speaker intent", "Speaker reaction"],
+    "annotation-perspective": []
+  },
+  "p20": {
+    "affective-state": ["Categorical emotion: 7 emotion labels"],
+    "context-setting": ["Speaker identity"],
+    "reasoning-causal": ["Binary causal utterance labels: if a historical utterance can be the cause of an emotional utterance"],
+    "multimodal-evidence": [],
+    "structured-representation": ["Graph nodes representing the target utterance and candidate cause utterance", "Graph edge representing global context"],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p11": {
+    "affective-state": ["Categorical emotion: 7 emotion categories", "Emotion probability distribution: human annotated/generated"],
+    "context-setting": ["Scenario information", "Performer identity"],
+    "reasoning-causal": ["LLM free-text explanations on how it interprets cues", "LLM free-text body motion description"],
+    "multimodal-evidence": ["Body motion intensity"],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p27": {
+    "affective-state": ["Categorical emotion: 26 BoLD; 7 CAER-S; EMOTIC 26 emotion categories", "Multi-label emotion labels: EMOTIC 26 emotion categories"],
+    "context-setting": ["Image/background information"],
+    "reasoning-causal": [],
+    "multimodal-evidence": ["Face and body posture"],
+    "structured-representation": ["Target-person bounding box"],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p01": {
+    "affective-state": ["Emotion turning point", "Intensity", "Categorical emotion:", "Dimensional emotion values", "Compound emotions", "Emotion-related state: pain, depression"],
+    "context-setting": ["Social context", "Person information", "Acting / authenticity"],
+    "reasoning-causal": ["Appraisal scales", "Emotion trigger / cause", "Object of emotion"],
+    "multimodal-evidence": ["Modality information", "Observable behaviour"],
+    "structured-representation": [],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": ["Experiencer view"]
+  },
+  "p38": {
+    "affective-state": ["Intensity values", "Multi-label emotion categories", "Sentiment labels"],
+    "context-setting": ["Dialogue history context"],
+    "reasoning-causal": [],
+    "multimodal-evidence": ["Multi-modality evidence: audio and visual"],
+    "structured-representation": ["Syntactic graph of the utterance"],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p43": {
+    "affective-state": ["Emotion intensity", "Distress", "Emotion polarity", "Multi-label emotion labels: 8 categories", "Empathy"],
+    "context-setting": ["Demographic information of participants"],
+    "reasoning-causal": ["Reaction text after reading"],
+    "multimodal-evidence": [],
+    "structured-representation": [],
+    "person-level-traits": ["Personality of essay writer"],
+    "event-centred": [],
+    "annotation-perspective": []
+  },
+  "p37": {
+    "affective-state": ["Valance and Arousal scores", "Multi-label emotion label: 7 categories"],
+    "context-setting": [],
+    "reasoning-causal": [],
+    "multimodal-evidence": ["VA scores from acoustic, visual and text cues"],
+    "structured-representation": ["VA-aware emotion correlation", "Contrastive pairs: constructed by VA distance"],
+    "person-level-traits": [],
+    "event-centred": [],
+    "annotation-perspective": []
+  }
+};
+const paperGenerationDetails = {
+  "p06": ["Image descriptors: annotated by observers (n=2).", "Sence descriptive sentence: generated by automatic fill-in-the-blank templates based on the descriptor categories.", "Base affect labels: inherited from the existing EMOTIC dataset."],
+  "p17": ["Emotion labels: self-report by participant during VR video watching."],
+  "p02": ["Affect labels: annotate by human annotators."],
+  "p03": ["Affect labels: self-reported by participants.", "Contextual explanations: collected from participants’ think-aloud responses.", "Reflective labels: collected through semi-structured interviews on participants."],
+  "p07": ["Narrative descriptors: generated using CLIP.", "LLaVA fine-tuned captions: human annotated.", "Base affect labels: 26 categorical from original EMOTIC dataset."],
+  "p08": ["Original emotion distributions: rated by at least five human raters from MSP-PODCAST dataset.", "Typed descriptions: written by human annotators in natural language.", "Adjusted labels/distributions and relabelling reasons: generated by ChatGPT / GPT-4 Turbo.", "Other label information: generated by ChatGPT."],
+  "p13": ["Coarse-grained emotion annotation and synthesised reasoning labels: generated by LLaMA-3.", "Fine-grained emotion reasoning: annotated by experts.", "Visual expression / Action Unit cues: generated by OpenFace.", "Visual objective/context descriptions: generated by MiniGPT-v2 from video frames.", "Audio tone descriptions: generated by Qwen-Audio.", "Lexical subtitles: taken from the original series video."],
+  "p19": ["Label-only sentences; Interpretive reasoning; Evidence-grounded reasoning: generated by Gemma-2-9B-IT.", "Reasoning-quality scores: generated by Llama-3-70B-Instruct."],
+  "p32": ["Affect/depression labels: annotated by experts.", "DSM-5 related labels and evidence: expert annotated and partly drawn from the existing DepreSym dataset.", "Time/People/Locations: extracted using Named Entity Recognition (NER) from posts.", "BDI-II to DSM-5 mapping: performed by experts.", "Generated labels/rationales: produced by Gemma-3 27B in a few-shot setup."],
+  "p41": ["Natural-language explanations: human annotated.", "Sentiment polarity base labels: from the SemEval 2014 Task 4 customer-review datasets.", "Noisy labels: produced by labelling functions, a filter bank, and a label aggregator."],
+  "p16": ["Emotion labels: generated by GPT-3.5 Turbo and DSPy modules.", "Speaker identity: produced using WeSpeaker and manually checked.", "Character/text/timestamps: taken from aligned and manually corrected subtitle files.", "Global persona and scene summaries: generated from full scripts by LLMs.", "Additional annotation outputs: generated by one of the DSPy modules."],
+  "p22": ["Contextual descriptions (Scene/context/body/facial cues): generated by LLaVA-1.5", "Alternative generated descriptions: GPT-4V descriptions are tested in ablation."],
+  "p34": ["Emotion intensity, Roseman emotions, and self-emotion ratings: annotated by crowdworkers.", "Coping-related categories: drawn from Roseman’s coping theory.", "Role-playing labels: provided by crowdworkers during the role-playing task."],
+  "p35": ["PAD/emotion sources: parents’ daily self-report.", "Dialogue-derived pleasure labels: generated by EmoLLaMA-chat-7B from transcribed dialogue.", "PAD change labels: computed from post-homework minus pre-homework PAD self-reports.", "Behaviour/conflict coding: generated by GPT-4o, with samples validated by experts.", "Speaker-role/transcript labels: from Xunfei for transcription, GPT-4o for transcript correction and role recognition."],
+  "p40": ["Model-predicted labels: generated by CLIP, GPT-4, GPT-4 Vision, Mistral, and LLaVA.", "Contextual descriptors (gender/age, action labels, physical signals, and environment): by CLIP from predefined descriptor lists."],
+  "p14": ["Affective-state and turning-point labels: annotated by human annotators.", "Cause/change/evidence labels: annotated by two human annotators, reviewed by a third annotator/judge.", "Visual-textual evidence: human-selected from transcript and video cues.", "Rationales: generated by ChatGPT.", "Scene descriptions: generated by LLaVA and summarised by GPT-3.5."],
+  "p10": ["Multimodal cause labels: annotated by three trained annotators.", "Commonsense cue labels: generated by ATOMIC20.", "Base emotion labels: from MELD / EmotionLines dataset."],
+  "p15": ["Cause-related task labels: defined by the challenge/task.", "Cause annotations: annotated by three graduate annotators.", "Extended data: partly labelled by humans and partly generated by ATOMIC20.", "Base emotion labels: from MELD / EmotionLines dataset."],
+  "p21": ["Emotion-cause evidence labels: annotated by two graduate annotators.", "Emotion-cause pairing: created using an emotion-cause pairing rule by annotator.", "Base emotion labels: inherit from DailyDialog dataset."],
+  "p23": ["Cause labels: annotated by 10 psychology graduate students.", "Speaker information: from M3ED dataset.", "Emotion categories: defined using Ekman-style basic emotions."],
+  "p12": ["Compound affect labels: provided by 11 trained annotators.", "Descriptive/other labels: provided by 11 trained annotators."],
+  "p33": ["Emotion label conditions: selected from the 28-category GoEmotions dataset.", "Narrative/context and rationale/explication labels: generated by Mistral.", "Source text: drawn from the WikiPlots corpus."],
+  "p29": ["Clip-level affect labels: created by three annotators.", "Speaker/non-speaker and cue-source labels: produced by human annotators.", "Transcript-speaker-timestamp: computed from aligned transcript metadata.", "Personality/contextual knowledge: created by a psychology-aware TBBT fan.", "Reasoning labels: produced by human annotators."],
+  "p09": ["Emotion flip labels: automatically derived by the authors from MELD speaker and emotion labels.", "Flip relation source: computed from speaker labels and utterance emotion labels.", "Speaker metadata: from the original MELD dataset."],
+  "p18": ["Affect/appraisal labels: first-person self-reports from participants.", "Trait, purchase/behavioural, and demographic labels: self-reported through questionnaires."],
+  "p26": ["Multi-perspective common-sense labels: generated automatically by COMET using the input text.", "Constructed emotion-label information: from GoEmotions labels."],
+  "p20": ["Conversation graph nodes: model-constructed representations.", "Graph edge types: designed by the authors to encode global, speaker, and local-context relations.", "Causal utterance labels: inherited from annotations in RECCON-DD and ConvECPE dataset.", "Speaker labels: inherited from the original conversation datasets."],
+  "p11": ["Performer-intended emotions: self-reported by performers in the GEMEP-GEneva dataset.", "Human-perceived emotions: selected by 22 human observers.", "LLM-perceived emotions and probability outputs: generated by GPT-4.1.", "Scenario text: written by performers.", "Descriptive/context labels: written by one annotator or generated by GPT-4.1.", "Experimental context conditions: designed by the authors."],
+  "p27": ["Entity context: generated by Faster R-CNN / ResNeXt-101-FPN and RoIAlign.", "Global context: generated from multiscale FPN feature maps.", "Scene graph context: generated by an unbiased scene graph generation method / MOTIFS trained on Visual Genome.", "Target-person boxes: provided by EMOTIC dataset."],
+  "p38": ["Audio representations: extracted using pretrained VGGish.", "Visual representations: extracted from the middle frame using ResNet-101.", "Dialogue-history/context representation: model-constructed from the utterance.", "Base multimodal/emotion labels: taken from MEISD dataset."],
+  "p43": ["Emotion labels: annotated.", "Essay-level emotion labels: annotated by annotators.", "Personality labels: self-reported through the Ten Item Personality Inventory.", "Trait empathy labels: self-reported through the Interpersonal Reactivity Index.", "Essays and demographic information: collected from MTurk workers through Qualtrics setup."],
+  "p37": ["Base annotations: taken from MOSEI and M3ED dataset.", "Emotion-category-level VA values: taken from the human-rated NRC-VAD lexicon.", "Modality-specific VA signals: generated by RoBERTa fine-tuned on EmoBank, EmoFAN trained on AffectNet, and Wav2Vec2-Large-Robust fine-tuned on MSP-Podcast.", "Emotion-similarity labels: computed from cosine similarity between category VA vectors.", "Modality-relevance labels: algorithm-derived using Euclidean distance between modality-specific VA scores and threshold δ."]
 };
 const categoryStyles = {
   amber: {
@@ -1238,6 +1665,11 @@ const categoryStyles = {
     icon: "bg-indigo-100",
     count: "bg-indigo-100 text-indigo-700",
     active: "border-indigo-400 bg-indigo-50"
+  },
+  fuchsia: {
+    icon: "bg-fuchsia-100",
+    count: "bg-fuchsia-100 text-fuchsia-700",
+    active: "border-fuchsia-400 bg-fuchsia-50"
   }
 };
 const uniquePaperCount = activePaperIds.length;
@@ -1251,11 +1683,24 @@ function getPaper(id) {
     id,
     ...papers[id],
     ...(paperBibliography[id] || {}),
-    exactlyEnriched: paperEnrichment[id] || []
+    exactlyEnriched: paperEnrichment[id] || [],
+    enrichmentByCategory: paperEnrichmentByCategory[id] || {},
+    generationDetails: paperGenerationDetails[id] || [],
+    sourceLabel: sourceFilters.find(source => source.papers.includes(id))?.description || "Not specified in the latest source table"
   };
 }
-function getMatchingPaperIds(selectedSource, selectedCategory) {
-  const baseIds = selectedCategory ? selectedCategory.papers : allPaperIds;
+function getComponentPaperIds(category, component) {
+  if (!category || !component) return [];
+  const keywords = component.keywords.map(keyword => keyword.toLowerCase());
+  const matchedIds = category.papers.filter(id => {
+    const paper = getPaper(id);
+    const searchableText = (paper.enrichmentByCategory[category.id] || []).filter(Boolean).join(" ").toLowerCase();
+    return keywords.some(keyword => searchableText.includes(keyword));
+  });
+  return [...new Set([...matchedIds, ...(component.paperIds || [])])].filter(id => category.papers.includes(id));
+}
+function getMatchingPaperIds(selectedSource, selectedCategory, selectedComponent) {
+  const baseIds = selectedCategory ? selectedComponent ? getComponentPaperIds(selectedCategory, selectedComponent) : selectedCategory.papers : allPaperIds;
   if (!selectedSource) {
     return baseIds;
   }
@@ -1279,9 +1724,11 @@ function SourceButton({
     className: "flex items-center gap-3"
   }, /*#__PURE__*/React.createElement("span", {
     className: cx("flex h-9 w-9 items-center justify-center rounded-xl text-sm font-bold", active ? "bg-white text-slate-950" : "bg-slate-100 text-slate-600")
-  }, source.mark), /*#__PURE__*/React.createElement("span", {
-    className: "text-base font-semibold"
-  }, source.title)), /*#__PURE__*/React.createElement("span", {
+  }, source.mark), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("span", {
+    className: "block text-base font-semibold"
+  }, source.title), /*#__PURE__*/React.createElement("span", {
+    className: cx("mt-0.5 block text-[11px] font-medium", active ? "text-slate-300" : "text-slate-500")
+  }, source.description))), /*#__PURE__*/React.createElement("span", {
     className: cx("rounded-full px-3 py-1 text-xs font-semibold", active ? "bg-white text-slate-950" : "bg-slate-100 text-slate-600")
   }, count));
 }
@@ -1397,11 +1844,14 @@ function PapersPanel({
   papersToShow,
   selectedSource,
   selectedCategory,
+  selectedComponent,
+  onClearComponent,
   onPaperClick
 }) {
   const styles = selectedCategory ? categoryStyles[selectedCategory.accent] : null;
   return /*#__PURE__*/React.createElement("div", {
-    className: "rounded-3xl border border-slate-200 bg-white shadow-sm"
+    id: "papers-panel",
+    className: "scroll-mt-6 rounded-3xl border border-slate-200 bg-white shadow-sm"
   }, /*#__PURE__*/React.createElement("div", {
     className: "border-b border-slate-200 p-5"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1410,7 +1860,14 @@ function PapersPanel({
     className: "rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"
   }, selectedSource ? selectedSource.title : "All sources"), /*#__PURE__*/React.createElement("span", {
     className: cx("rounded-full px-3 py-1 text-xs font-semibold", styles ? styles.count : "bg-slate-100 text-slate-600")
-  }, selectedCategory ? selectedCategory.title : "All richness types")), /*#__PURE__*/React.createElement("div", {
+  }, selectedCategory ? selectedCategory.title : "All richness types"), selectedComponent ? /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: onClearComponent,
+    className: "rounded-full bg-slate-950 px-3 py-1 text-xs font-semibold text-white transition hover:bg-slate-700",
+    "aria-label": `Clear component filter ${selectedComponent.label}`
+  }, selectedComponent.label, " ", /*#__PURE__*/React.createElement("span", {
+    className: "ml-1 text-slate-300"
+  }, "×")) : null), /*#__PURE__*/React.createElement("div", {
     className: "mt-3 flex items-end justify-between gap-4"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "text-2xl font-semibold leading-tight text-slate-950"
@@ -1515,7 +1972,9 @@ function PaperModal({
     className: "rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"
   }, paper.year), /*#__PURE__*/React.createElement("span", {
     className: "rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"
-  }, paper.tag)), /*#__PURE__*/React.createElement("h3", {
+  }, paper.tag), /*#__PURE__*/React.createElement("span", {
+    className: "rounded-full bg-slate-950 px-3 py-1 text-xs font-semibold text-white"
+  }, paper.sourceLabel)), /*#__PURE__*/React.createElement("h3", {
     className: "mt-4 text-2xl font-semibold leading-tight text-slate-950"
   }, paper.title)), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
@@ -1526,6 +1985,9 @@ function PaperModal({
     paper: paper
   }), paper.exactlyEnriched.length ? /*#__PURE__*/React.createElement(EnrichmentBlock, {
     items: paper.exactlyEnriched
+  }) : null, paper.generationDetails.length ? /*#__PURE__*/React.createElement(EnrichmentBlock, {
+    label: "How the richness was produced",
+    items: paper.generationDetails
   }) : null, /*#__PURE__*/React.createElement(InfoBlock, {
     label: "What it does",
     text: paper.summary
@@ -1541,13 +2003,14 @@ function PaperModal({
   }))));
 }
 function EnrichmentBlock({
-  items
+  items,
+  label = "What is exactly enriched"
 }) {
   return /*#__PURE__*/React.createElement("div", {
     className: "rounded-2xl bg-slate-50 p-4"
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-sm font-semibold text-slate-950"
-  }, "What is exactly enriched"), /*#__PURE__*/React.createElement("ul", {
+  }, label), /*#__PURE__*/React.createElement("ul", {
     className: "mt-2 space-y-2 pl-5 text-sm leading-6 text-slate-600"
   }, items.map(item => /*#__PURE__*/React.createElement("li", {
     key: item,
@@ -1642,12 +2105,192 @@ function MiniIllustration() {
     }, category.subcategories.length, " low-frequency subtypes") : null);
   })))));
 }
+function TaxonomyOrbit({
+  selectedSource,
+  selectedCategory,
+  selectedComponent,
+  onCategorySelect,
+  onComponentSelect
+}) {
+  const [hoveredId, setHoveredId] = useState(null);
+  const [pointer, setPointer] = useState({
+    x: 50,
+    y: 50,
+    tiltX: 0,
+    tiltY: 0
+  });
+  const activeCategory = level2Categories.find(category => category.id === hoveredId) || selectedCategory || level2Categories[0];
+  const handlePointerMove = event => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width * 100;
+    const y = (event.clientY - rect.top) / rect.height * 100;
+    setPointer({
+      x,
+      y,
+      tiltX: (50 - y) / 28,
+      tiltY: (x - 50) / 28
+    });
+  };
+  const resetPointer = () => {
+    setHoveredId(null);
+    setPointer({
+      x: 50,
+      y: 50,
+      tiltX: 0,
+      tiltY: 0
+    });
+  };
+  return /*#__PURE__*/React.createElement("section", {
+    className: "mt-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col gap-3 border-b border-slate-100 px-6 py-5 sm:flex-row sm:items-end sm:justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-semibold uppercase tracking-[0.18em] text-slate-500"
+  }, "Scoping review taxonomy"), /*#__PURE__*/React.createElement("h2", {
+    className: "mt-2 text-2xl font-semibold text-slate-950 sm:text-3xl"
+  }, "Eight forms of rich affective ground truth"), /*#__PURE__*/React.createElement("p", {
+    className: "mt-2 max-w-3xl text-sm leading-6 text-slate-600"
+  }, "Move across the map to reveal specific components. Click a category or component to filter the papers below.")), /*#__PURE__*/React.createElement("div", {
+    className: "rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-600"
+  }, "Hover to explore ", "\u00B7", " click to filter")), /*#__PURE__*/React.createElement("div", {
+    className: "taxonomy-scroll overflow-x-auto"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "taxonomy-stage relative mx-auto max-w-6xl overflow-hidden bg-slate-50",
+    onMouseMove: handlePointerMove,
+    onMouseLeave: resetPointer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pointer-events-none absolute inset-0 opacity-80 transition-opacity duration-300",
+    style: {
+      background: `radial-gradient(circle at ${pointer.x}% ${pointer.y}%, rgba(14, 165, 233, 0.18), rgba(16, 185, 129, 0.07) 20%, transparent 42%)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-0 transition-transform duration-200 ease-out",
+    style: {
+      transform: `perspective(1200px) rotateX(${pointer.tiltX}deg) rotateY(${pointer.tiltY}deg)`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pointer-events-none absolute left-[5%] top-[6%] h-[88%] w-[90%] rounded-[50%] border border-dashed border-slate-300/70"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pointer-events-none absolute left-[20%] top-[20%] h-[60%] w-[60%] rounded-[50%] border border-slate-300/80"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pointer-events-none absolute left-1/2 top-[3.5%] -translate-x-1/2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500 shadow-sm"
+  }, "Specific components"), level2Categories.map((category, index) => {
+    const angle = -90 + index * (360 / level2Categories.length);
+    return /*#__PURE__*/React.createElement("div", {
+      key: `spoke-${category.id}`,
+      className: "orbit-spoke absolute left-1/2 top-1/2 h-px origin-left bg-slate-300 transition-opacity duration-300",
+      style: {
+        width: "27%",
+        transform: `rotate(${angle}deg)`,
+        opacity: activeCategory.id === category.id ? 1 : 0.35
+      }
+    });
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "absolute left-1/2 top-1/2 z-20 flex h-36 w-36 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-slate-950 px-5 text-center text-white shadow-2xl ring-8 ring-white/80 sm:h-44 sm:w-44",
+    onClick: () => onCategorySelect(null),
+    "aria-label": "Clear the taxonomy category filter"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-base font-bold leading-5 sm:text-lg"
+  }, "Rich labels (RL)"), /*#__PURE__*/React.createElement("span", {
+    className: "mt-2 text-[10px] font-medium leading-3 text-slate-300 sm:text-xs"
+  }, "Rich affective", /*#__PURE__*/React.createElement("br", null), "ground truth")), level2Categories.map((category, index) => {
+    const angle = -90 + index * (360 / level2Categories.length);
+    const radians = angle * Math.PI / 180;
+    const left = 50 + 27 * Math.cos(radians);
+    const top = 50 + 23 * Math.sin(radians);
+    const active = activeCategory.id === category.id;
+    const selected = selectedCategory?.id === category.id;
+    const styles = categoryStyles[category.accent];
+    return /*#__PURE__*/React.createElement("button", {
+      key: category.id,
+      type: "button",
+      onMouseEnter: () => setHoveredId(category.id),
+      onFocus: () => setHoveredId(category.id),
+      onBlur: () => setHoveredId(null),
+      onClick: () => onCategorySelect(category),
+      className: cx("absolute z-30 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border bg-white px-2 text-center shadow-md transition duration-300 sm:h-28 sm:w-28", active ? `scale-110 shadow-xl ${styles.active}` : "border-slate-200 opacity-75 hover:opacity-100", selected && "ring-4 ring-slate-950/10"),
+      style: {
+        left: `${left}%`,
+        top: `${top}%`,
+        transform: `translate(-50%, -50%) translate(${pointer.tiltY * (index % 2 ? 1.6 : 1)}px, ${pointer.tiltX * (index % 2 ? 1 : 1.6)}px) scale(${active ? 1.08 : 1})`
+      },
+      "aria-pressed": selected
+    }, /*#__PURE__*/React.createElement("span", {
+      className: cx("mb-1 flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold", styles.icon)
+    }, category.mark), /*#__PURE__*/React.createElement("span", {
+      className: "text-[11px] font-semibold leading-3 text-slate-900 sm:text-xs sm:leading-4"
+    }, category.shortTitle));
+  }), (activeCategory.components || []).map((component, index, components) => {
+    const categoryIndex = level2Categories.findIndex(category => category.id === activeCategory.id);
+    const rotation = categoryIndex * (360 / level2Categories.length);
+    const angle = -90 + rotation + index * (360 / components.length);
+    const radians = angle * Math.PI / 180;
+    const left = 50 + 44 * Math.cos(radians);
+    const top = 50 + 41 * Math.sin(radians);
+    const componentPaperIds = getComponentPaperIds(activeCategory, component);
+    const sourceSet = selectedSource ? new Set(selectedSource.papers) : null;
+    const paperCount = sourceSet ? componentPaperIds.filter(id => sourceSet.has(id)).length : componentPaperIds.length;
+    const active = selectedCategory?.id === activeCategory.id && selectedComponent?.id === component.id;
+    return /*#__PURE__*/React.createElement("button", {
+      key: `${activeCategory.id}-${component.id}`,
+      type: "button",
+      onClick: () => onComponentSelect(activeCategory, component),
+      className: cx("component-orbit-node absolute z-40 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 px-2 text-center shadow-lg transition hover:-translate-y-[52%] hover:shadow-xl sm:h-24 sm:w-24", active ? "border-slate-950 bg-slate-950 text-white ring-4 ring-slate-950/15" : `${categoryStyles[activeCategory.accent].active} text-slate-900 hover:border-slate-400`),
+      style: {
+        left: `${left}%`,
+        top: `${top}%`,
+        animationDelay: `${index * 45}ms`
+      },
+      "aria-pressed": active,
+      "aria-label": `${component.label}, ${paperCount} matching papers`
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "text-[10px] font-semibold leading-3 sm:text-[11px] sm:leading-4"
+    }, component.label), /*#__PURE__*/React.createElement("span", {
+      className: cx("mt-1 rounded-full px-2 py-0.5 text-[9px] font-bold", active ? "bg-white/15 text-white" : categoryStyles[activeCategory.accent].count)
+    }, paperCount, " papers"));
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "border-t border-slate-200 bg-slate-50 px-5 py-2 text-center text-[11px] font-medium text-slate-500 sm:hidden"
+  }, "Swipe sideways to see the complete taxonomy map."), /*#__PURE__*/React.createElement("div", {
+    className: "border-t border-slate-200 bg-white px-5 py-5 sm:px-7"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-semibold uppercase tracking-[0.16em] text-slate-500"
+  }, "Selected category"), /*#__PURE__*/React.createElement("h3", {
+    className: "mt-2 text-xl font-semibold text-slate-950"
+  }, activeCategory.title), /*#__PURE__*/React.createElement("p", {
+    className: "mt-2 max-w-3xl text-sm leading-6 text-slate-600"
+  }, activeCategory.summary)), /*#__PURE__*/React.createElement("span", {
+    className: "w-fit shrink-0 rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white"
+  }, (activeCategory.components || []).length, " specific components")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5",
+    "aria-label": `Specific components of ${activeCategory.shortTitle}`
+  }, (activeCategory.components || []).map((component, index) => {
+    const componentPaperIds = getComponentPaperIds(activeCategory, component);
+    const sourceSet = selectedSource ? new Set(selectedSource.papers) : null;
+    const paperCount = sourceSet ? componentPaperIds.filter(id => sourceSet.has(id)).length : componentPaperIds.length;
+    const active = selectedCategory?.id === activeCategory.id && selectedComponent?.id === component.id;
+    return /*#__PURE__*/React.createElement("button", {
+      key: `${activeCategory.id}-${component.id}`,
+      type: "button",
+      onClick: () => onComponentSelect(activeCategory, component),
+      className: cx("taxonomy-component-chip flex min-h-20 items-center justify-center rounded-full border px-4 text-center text-sm font-semibold leading-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md", active ? "border-slate-950 bg-slate-950 text-white" : "border-slate-200 bg-slate-50 text-slate-800"),
+      style: {
+        animationDelay: `${index * 45}ms`
+      }
+    }, /*#__PURE__*/React.createElement("span", null, component.label, /*#__PURE__*/React.createElement("span", {
+      className: cx("ml-2 text-xs", active ? "text-slate-300" : "text-slate-500")
+    }, paperCount)));
+  }))));
+}
 function RichAffectiveGroundTruthMindMap() {
-  const [selectedSource, setSelectedSource] = useState(sourceFilters[0]);
-  const [selectedCategory, setSelectedCategory] = useState(level2Categories[0]);
+  const [selectedSource, setSelectedSource] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedComponent, setSelectedComponent] = useState(null);
   const [selectedPaper, setSelectedPaper] = useState(null);
   const [matrixType, setMatrixType] = useState(null);
-  const papersToShow = getMatchingPaperIds(selectedSource, selectedCategory).map(getPaper);
+  const papersToShow = getMatchingPaperIds(selectedSource, selectedCategory, selectedComponent).map(getPaper);
   return /*#__PURE__*/React.createElement("div", {
     className: "min-h-screen bg-slate-50 px-4 py-6 text-slate-950 sm:px-6 lg:px-8"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1666,22 +2309,51 @@ function RichAffectiveGroundTruthMindMap() {
     className: "text-3xl font-semibold"
   }, papersToShow.length), /*#__PURE__*/React.createElement("div", {
     className: "text-xs font-medium uppercase tracking-wide text-slate-500"
-  }, "current matches"))), /*#__PURE__*/React.createElement("section", {
+  }, "current matches"))), /*#__PURE__*/React.createElement(TaxonomyOrbit, {
+    selectedSource: selectedSource,
+    selectedCategory: selectedCategory,
+    selectedComponent: selectedComponent,
+    onCategorySelect: category => {
+      if (!category) {
+        setSelectedCategory(null);
+        setSelectedComponent(null);
+        return;
+      }
+      setSelectedCategory(selectedCategory?.id === category.id ? null : category);
+      setSelectedComponent(null);
+    },
+    onComponentSelect: (category, component) => {
+      setSelectedCategory(category);
+      setSelectedComponent(current => current?.id === component.id ? null : component);
+      window.setTimeout(() => {
+        document.getElementById("papers-panel")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }, 80);
+    }
+  }), /*#__PURE__*/React.createElement("section", {
     className: "mt-8 grid items-start gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(26rem,0.85fr)]"
   }, /*#__PURE__*/React.createElement(FilterPanel, {
     selectedSource: selectedSource,
     selectedCategory: selectedCategory,
     onSourceSelect: source => setSelectedSource(current => current?.id === source.id ? null : source),
-    onCategorySelect: category => setSelectedCategory(current => current?.id === category.id ? null : category),
+    onCategorySelect: category => {
+      setSelectedCategory(current => current?.id === category.id ? null : category);
+      setSelectedComponent(null);
+    },
     onClear: () => {
       setSelectedSource(null);
       setSelectedCategory(null);
+      setSelectedComponent(null);
     },
     onOpenMatrix: setMatrixType
   }), /*#__PURE__*/React.createElement(PapersPanel, {
     papersToShow: papersToShow,
     selectedSource: selectedSource,
     selectedCategory: selectedCategory,
+    selectedComponent: selectedComponent,
+    onClearComponent: () => setSelectedComponent(null),
     onPaperClick: setSelectedPaper
   }))), /*#__PURE__*/React.createElement(MatrixModal, {
     type: matrixType,

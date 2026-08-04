@@ -49,6 +49,55 @@
       h3 {
         font-family: "Fraunces", serif;
       }
+
+      .taxonomy-stage {
+        width: max(100%, 760px);
+        height: clamp(36rem, 62vw, 44rem);
+      }
+
+      .taxonomy-scroll {
+        scrollbar-color: #94a3b8 #e2e8f0;
+        scrollbar-width: thin;
+      }
+
+      .taxonomy-component-chip {
+        animation: component-chip-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+
+      .component-orbit-node {
+        animation: component-orbit-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+
+      @keyframes component-chip-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes component-orbit-in {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.72);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .taxonomy-stage *,
+        .taxonomy-component-chip,
+        .component-orbit-node {
+          animation: none !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   </head>
   <body class="min-h-screen text-slate-950 antialiased">
